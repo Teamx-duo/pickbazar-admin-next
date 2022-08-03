@@ -141,7 +141,7 @@ export default function Dashboard() {
       </div>
       <div className="w-full sm:pe-0 mb-6 xl:mb-0">
         <PopularProductList
-          products={popularProductData}
+          products={popularProductData.docs}
           title={t("table:popular-products-table-title")}
         />
       </div>

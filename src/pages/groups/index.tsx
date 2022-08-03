@@ -1,24 +1,24 @@
-import Card from "@components/common/card";
-import Layout from "@components/layouts/admin";
-import Search from "@components/common/search";
-import TypeList from "@components/group/group-list";
-import ErrorMessage from "@components/ui/error-message";
-import LinkButton from "@components/ui/link-button";
-import Loader from "@components/ui/loader/loader";
-import { OrderField } from "@ts-types/index";
-import { SortOrder } from "@ts-types/generated";
-import { useState } from "react";
-import { useTypesQuery } from "@data/type/use-types.query";
-import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { ROUTES } from "@utils/routes";
-import SortForm from "@components/common/sort-form";
+import Card from '@components/common/card';
+import Layout from '@components/layouts/admin';
+import Search from '@components/common/search';
+import TypeList from '@components/group/group-list';
+import ErrorMessage from '@components/ui/error-message';
+import LinkButton from '@components/ui/link-button';
+import Loader from '@components/ui/loader/loader';
+import { OrderField } from '@ts-types/index';
+import { SortOrder } from '@ts-types/generated';
+import { useState } from 'react';
+import { useTypesQuery } from '@data/type/use-types.query';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { ROUTES } from '@utils/routes';
+import SortForm from '@components/common/sort-form';
 
 export default function TypesPage() {
   const { t } = useTranslation();
-  const [orderBy, setOrder] = useState("created_at");
+  const [orderBy, setOrder] = useState('created_at');
   const [sortedBy, setColumn] = useState<SortOrder>(SortOrder.Desc);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
   const {
     data,
     isLoading: loading,
@@ -29,7 +29,7 @@ export default function TypesPage() {
     sortedBy,
   });
 
-  if (loading) return <Loader text={t("common:text-loading")} />;
+  if (loading) return <Loader text={t('common:text-loading')} />;
   if (error) return <ErrorMessage message={error.message} />;
   function handleSearch({ searchText }: { searchText: string }) {
     setSearchTerm(searchText);
@@ -40,7 +40,7 @@ export default function TypesPage() {
       <Card className="flex flex-col xl:flex-row items-center mb-8">
         <div className="md:w-1/4 mb-4 xl:mb-0">
           <h1 className="text-xl font-semibold text-heading">
-            {t("common:sidebar-nav-item-groups")}
+            {t('common:sidebar-nav-item-groups')}
           </h1>
         </div>
 
@@ -57,9 +57,9 @@ export default function TypesPage() {
               setOrder(value);
             }}
             options={[
-              { id: 1, value: "name", label: "Name" },
-              { id: 2, value: "created_at", label: "Created At" },
-              { id: 2, value: "updated_at", label: "Updated At" },
+              { id: 1, value: 'name', label: 'Name' },
+              { id: 2, value: 'createdAt', label: 'Created At' },
+              { id: 2, value: 'updatedAt', label: 'Updated At' },
             ]}
           />
 
@@ -68,10 +68,10 @@ export default function TypesPage() {
             className="h-12 md:ms-6 w-full md:w-auto"
           >
             <span className="block md:hidden xl:block">
-              + {t("form:button-label-add-group")}
+              + {t('form:button-label-add-group')}
             </span>
             <span className="hidden md:block xl:hidden">
-              + {t("form:button-label-add")}
+              + {t('form:button-label-add')}
             </span>
           </LinkButton>
         </div>
@@ -85,6 +85,6 @@ TypesPage.Layout = Layout;
 
 export const getStaticProps = async ({ locale }: any) => ({
   props: {
-    ...(await serverSideTranslations(locale, ["table", "common", "form"])),
+    ...(await serverSideTranslations(locale, ['table', 'common', 'form'])),
   },
 });

@@ -1,24 +1,24 @@
-import Pagination from "@components/ui/pagination";
-import Image from "next/image";
-import dayjs from "dayjs";
-import { Table } from "@components/ui/table";
-import { CouponPaginator } from "@ts-types/generated";
-import ActionButtons from "@components/common/action-buttons";
-import { siteSettings } from "@settings/site.settings";
-import { Attachment } from "@ts-types/generated";
-import usePrice from "@utils/use-price";
-import { ROUTES } from "@utils/routes";
-import relativeTime from "dayjs/plugin/relativeTime";
-import utc from "dayjs/plugin/utc";
-import timezone from "dayjs/plugin/timezone";
-import { useTranslation } from "next-i18next";
+import Pagination from '@components/ui/pagination';
+import Image from 'next/image';
+import dayjs from 'dayjs';
+import { Table } from '@components/ui/table';
+import { Coupon, CouponPaginator, IPaginator } from '@ts-types/generated';
+import ActionButtons from '@components/common/action-buttons';
+import { siteSettings } from '@settings/site.settings';
+import { Attachment } from '@ts-types/generated';
+import usePrice from '@utils/use-price';
+import { ROUTES } from '@utils/routes';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+import { useTranslation } from 'next-i18next';
 
 dayjs.extend(relativeTime);
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
 type IProps = {
-  coupons: CouponPaginator | null | undefined;
+  coupons: IPaginator<Coupon> | null | undefined;
   onPagination: (current: number) => void;
 };
 const CouponList = ({ coupons, onPagination }: IProps) => {
@@ -27,20 +27,21 @@ const CouponList = ({ coupons, onPagination }: IProps) => {
 
   const columns = [
     {
-      title: t("table:table-item-id"),
-      dataIndex: "id",
-      key: "id",
-      align: "center",
-      width: 64,
+      title: t('table:table-item-id'),
+      dataIndex: '_id',
+      key: '_id',
+      ellipsis: true,
+      align: 'center',
+      width: 100,
     },
     {
-      title: t("table:table-item-banner"),
-      dataIndex: "image",
-      key: "image",
+      title: t('table:table-item-banner'),
+      dataIndex: 'image',
+      key: 'image',
       width: 74,
-      render: (image: Attachment) => (
+      render: (image: string) => (
         <Image
-          src={image?.thumbnail ?? siteSettings.product.placeholder}
+          src={image ?? siteSettings.product.placeholder}
           alt="coupon banner"
           layout="fixed"
           width={42}
@@ -50,35 +51,35 @@ const CouponList = ({ coupons, onPagination }: IProps) => {
       ),
     },
     {
-      title: t("table:table-item-code"),
-      dataIndex: "code",
-      key: "code",
-      align: "center",
+      title: t('table:table-item-code'),
+      dataIndex: 'code',
+      key: 'code',
+      align: 'center',
       render: (text: string) => (
         <span className="whitespace-nowrap">{text}</span>
       ),
     },
     {
-      title: t("table:table-item-amount"),
-      dataIndex: "amount",
-      key: "amount",
-      align: "center",
+      title: t('table:table-item-amount'),
+      dataIndex: 'amount',
+      key: 'amount',
+      align: 'center',
       width: 132,
       render: (amount: number, record: any) => {
-        const { price } = usePrice({
-          amount: amount,
-        });
-        if (record.type === "PERCENTAGE_COUPON") {
+        // const { price } = usePrice({
+        //   amount: amount,
+        // });
+        if (record.type === 'PERCENTAGE_COUPON') {
           return <span>{amount}%</span>;
         }
-        return <span>{price}</span>;
+        return <span>{amount}</span>;
       },
     },
     {
-      title: t("table:table-item-active"),
-      dataIndex: "active_from",
-      key: "active_from",
-      align: "center",
+      title: t('table:table-item-active'),
+      dataIndex: 'active_from',
+      key: 'active_from',
+      align: 'center',
       render: (date: string) => (
         <span className="whitespace-nowrap">
           {dayjs().to(dayjs.utc(date).tz(dayjs.tz.guess()))}
@@ -86,10 +87,10 @@ const CouponList = ({ coupons, onPagination }: IProps) => {
       ),
     },
     {
-      title: t("table:table-item-expired"),
-      dataIndex: "expire_at",
-      key: "expire_at",
-      align: "center",
+      title: t('table:table-item-expired'),
+      dataIndex: 'expire_at',
+      key: 'expire_at',
+      align: 'center',
       render: (date: string) => (
         <span className="whitespace-nowrap">
           {dayjs().to(dayjs.utc(date).tz(dayjs.tz.guess()))}
@@ -97,10 +98,10 @@ const CouponList = ({ coupons, onPagination }: IProps) => {
       ),
     },
     {
-      title: t("table:table-item-actions"),
-      dataIndex: "id",
-      key: "actions",
-      align: "center",
+      title: t('table:table-item-actions'),
+      dataIndex: 'id',
+      key: 'actions',
+      align: 'center',
       render: (id: string) => (
         <ActionButtons
           id={id}
@@ -117,19 +118,19 @@ const CouponList = ({ coupons, onPagination }: IProps) => {
         {/* @ts-ignore */}
         <Table
           columns={columns}
-          emptyText={t("table:empty-table-data")}
+          emptyText={t('table:empty-table-data')}
           data={data}
-          rowKey="id"
+          rowKey="_id"
           scroll={{ x: 900 }}
         />
       </div>
 
-      {!!paginatorInfo.total && (
+      {!!paginatorInfo.totalPages && (
         <div className="flex justify-end items-center">
           <Pagination
-            total={paginatorInfo.total}
-            current={paginatorInfo.currentPage}
-            pageSize={paginatorInfo.perPage}
+            total={paginatorInfo.totalPages}
+            current={paginatorInfo.pagingCounter}
+            pageSize={paginatorInfo.limit}
             onChange={onPagination}
           />
         </div>

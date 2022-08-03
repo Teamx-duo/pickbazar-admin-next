@@ -1,16 +1,16 @@
-import Pagination from "@components/ui/pagination";
-import { Table } from "@components/ui/table";
-import ActionButtons from "@components/common/action-buttons";
-import { getIcon } from "@utils/get-icon";
-import * as categoriesIcon from "@components/icons/category";
-import { ROUTES } from "@utils/routes";
-import { CategoryPaginator } from "@ts-types/generated";
-import Image from "next/image";
-import { useTranslation } from "next-i18next";
-import { useIsRTL } from "@utils/locals";
+import Pagination from '@components/ui/pagination';
+import { Table } from '@components/ui/table';
+import ActionButtons from '@components/common/action-buttons';
+import { getIcon } from '@utils/get-icon';
+import * as categoriesIcon from '@components/icons/category';
+import { ROUTES } from '@utils/routes';
+import { Category, CategoryPaginator, IPaginator } from '@ts-types/generated';
+import Image from 'next/image';
+import { useTranslation } from 'next-i18next';
+import { useIsRTL } from '@utils/locals';
 
 export type IProps = {
-  categories: CategoryPaginator | undefined | null;
+  categories: IPaginator<Category> | undefined | null;
   onPagination: (key: number) => void;
 };
 const CategoryList = ({ categories, onPagination }: IProps) => {
@@ -22,52 +22,53 @@ const CategoryList = ({ categories, onPagination }: IProps) => {
 
   const columns = [
     {
-      title: t("table:table-item-id"),
-      dataIndex: "id",
-      key: "id",
-      align: "center",
-      width: 60,
+      title: t('table:table-item-id'),
+      dataIndex: '_id',
+      key: '_id',
+      ellipsis: true,
+      align: 'center',
+      width: 100,
     },
     {
-      title: t("table:table-item-title"),
-      dataIndex: "name",
-      key: "name",
+      title: t('table:table-item-title'),
+      dataIndex: 'name',
+      key: 'name',
       align: alignLeft,
       width: 150,
     },
     {
-      title: t("table:table-item-details"),
-      dataIndex: "details",
-      key: "details",
+      title: t('table:table-item-details'),
+      dataIndex: 'details',
+      key: 'details',
       align: alignLeft,
       width: 200,
     },
     {
-      title: t("table:table-item-image"),
-      dataIndex: "image",
-      key: "image",
-      align: "center",
+      title: t('table:table-item-image'),
+      dataIndex: 'image',
+      key: 'image',
+      align: 'center',
 
       render: (image: any, { name }: { name: string }) => {
-        if (!image?.thumbnail) return null;
+        if (!image) return null;
 
         return (
           <Image
-            src={image?.thumbnail ?? "/"}
+            src={image ?? '/'}
             alt={name}
             layout="fixed"
-            width={24}
-            height={24}
+            width={30}
+            height={30}
             className="rounded overflow-hidden"
           />
         );
       },
     },
     {
-      title: t("table:table-item-icon"),
-      dataIndex: "icon",
-      key: "icon",
-      align: "center",
+      title: t('table:table-item-icon'),
+      dataIndex: 'icon',
+      key: 'icon',
+      align: 'center',
       render: (icon: string) => {
         if (!icon) return null;
         return (
@@ -75,17 +76,17 @@ const CategoryList = ({ categories, onPagination }: IProps) => {
             {getIcon({
               iconList: categoriesIcon,
               iconName: icon,
-              className: "w-5 h-5 max-h-full max-w-full",
+              className: 'w-5 h-5 max-h-full max-w-full',
             })}
           </span>
         );
       },
     },
     {
-      title: t("table:table-item-slug"),
-      dataIndex: "slug",
-      key: "slug",
-      align: "center",
+      title: t('table:table-item-slug'),
+      dataIndex: 'slug',
+      key: 'slug',
+      align: 'center',
       ellipsis: true,
       width: 150,
       render: (slug: any) => (
@@ -98,9 +99,9 @@ const CategoryList = ({ categories, onPagination }: IProps) => {
       ),
     },
     {
-      title: t("table:table-item-group"),
-      dataIndex: "type",
-      key: "type",
+      title: t('table:table-item-group'),
+      dataIndex: 'type',
+      key: 'type',
       align: alignLeft,
       width: 120,
       render: (type: any) => (
@@ -113,10 +114,10 @@ const CategoryList = ({ categories, onPagination }: IProps) => {
       ),
     },
     {
-      title: t("table:table-item-actions"),
-      dataIndex: "id",
-      key: "actions",
-      align: "center",
+      title: t('table:table-item-actions'),
+      dataIndex: 'id',
+      key: 'actions',
+      align: 'center',
       width: 90,
       render: (id: string) => (
         <ActionButtons
@@ -134,23 +135,23 @@ const CategoryList = ({ categories, onPagination }: IProps) => {
         <Table
           //@ts-ignore
           columns={columns}
-          emptyText={t("table:empty-table-data")}
+          emptyText={t('table:empty-table-data')}
           data={data}
-          rowKey="id"
+          rowKey="_id"
           scroll={{ x: 1000 }}
           expandable={{
-            expandedRowRender: () => "",
+            expandedRowRender: () => '',
             rowExpandable: rowExpandable,
           }}
         />
       </div>
 
-      {!!paginatorInfo.total && (
+      {!!paginatorInfo.totalDocs && (
         <div className="flex justify-end items-center">
           <Pagination
-            total={paginatorInfo.total}
-            current={paginatorInfo.currentPage}
-            pageSize={paginatorInfo.perPage}
+            total={paginatorInfo.totalPages}
+            current={paginatorInfo.pagingCounter}
+            pageSize={paginatorInfo.limit}
             onChange={onPagination}
           />
         </div>

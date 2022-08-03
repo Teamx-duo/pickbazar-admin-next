@@ -1,13 +1,17 @@
-import Pagination from "@components/ui/pagination";
-import { Table } from "@components/ui/table";
-import ActionButtons from "@components/common/action-buttons";
-import { ROUTES } from "@utils/routes";
-import { OrderStatus, OrderStatusPaginator } from "@ts-types/generated";
-import { useTranslation } from "next-i18next";
-import { useIsRTL } from "@utils/locals";
+import Pagination from '@components/ui/pagination';
+import { Table } from '@components/ui/table';
+import ActionButtons from '@components/common/action-buttons';
+import { ROUTES } from '@utils/routes';
+import {
+  IPaginator,
+  OrderStatus,
+  OrderStatusPaginator,
+} from '@ts-types/generated';
+import { useTranslation } from 'next-i18next';
+import { useIsRTL } from '@utils/locals';
 
 export type IProps = {
-  order_statuses: OrderStatusPaginator | undefined | null;
+  order_statuses: IPaginator<OrderStatus> | undefined | null;
   onPagination: (key: number) => void;
 };
 const OrderStatusList = ({ order_statuses, onPagination }: IProps) => {
@@ -16,16 +20,17 @@ const OrderStatusList = ({ order_statuses, onPagination }: IProps) => {
   const { alignLeft, alignRight } = useIsRTL();
   const columns = [
     {
-      title: t("table:table-item-id"),
-      dataIndex: "id",
-      key: "id",
-      align: "center",
-      width: 70,
+      title: t('table:table-item-id'),
+      dataIndex: '_id',
+      key: '_id',
+      ellipsis: true,
+      align: 'center',
+      width: 100,
     },
     {
-      title: t("table:table-item-title"),
-      dataIndex: "name",
-      key: "name",
+      title: t('table:table-item-title'),
+      dataIndex: 'name',
+      key: 'name',
       align: alignLeft,
       render: (name: string, record: OrderStatus) => (
         <span className="font-semibold" style={{ color: record?.color! }}>
@@ -34,15 +39,15 @@ const OrderStatusList = ({ order_statuses, onPagination }: IProps) => {
       ),
     },
     {
-      title: t("table:table-item-serial"),
-      dataIndex: "serial",
-      key: "serial",
-      align: "center",
+      title: t('table:table-item-serial'),
+      dataIndex: 'serial',
+      key: 'serial',
+      align: 'center',
     },
     {
-      title: t("table:table-item-actions"),
-      dataIndex: "id",
-      key: "actions",
+      title: t('table:table-item-actions'),
+      dataIndex: 'id',
+      key: 'actions',
       align: alignRight,
       render: (id: string, record: OrderStatus) => (
         <ActionButtons
@@ -60,19 +65,19 @@ const OrderStatusList = ({ order_statuses, onPagination }: IProps) => {
         <Table
           //@ts-ignore
           columns={columns}
-          emptyText={t("table:empty-table-data")}
+          emptyText={t('table:empty-table-data')}
           data={data}
-          rowKey="id"
+          rowKey="_id"
           scroll={{ x: 380 }}
         />
       </div>
 
-      {!!paginatorInfo.total && (
+      {!!paginatorInfo.totalPages && (
         <div className="flex justify-end items-center">
           <Pagination
-            total={paginatorInfo.total}
-            current={paginatorInfo.currentPage}
-            pageSize={paginatorInfo.perPage}
+            total={paginatorInfo.totalPages}
+            current={paginatorInfo.pagingCounter}
+            pageSize={paginatorInfo.limit}
             onChange={onPagination}
           />
         </div>

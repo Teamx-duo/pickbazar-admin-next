@@ -1,15 +1,15 @@
-import Pagination from "@components/ui/pagination";
-import Image from "next/image";
-import { Table } from "@components/ui/table";
-import ActionButtons from "@components/common/action-buttons";
-import { siteSettings } from "@settings/site.settings";
-import { useTranslation } from "next-i18next";
-import { useIsRTL } from "@utils/locals";
-import Badge from "@components/ui/badge/badge";
-import { ShopPaginator } from "@ts-types/generated";
+import Pagination from '@components/ui/pagination';
+import Image from 'next/image';
+import { Table } from '@components/ui/table';
+import ActionButtons from '@components/common/action-buttons';
+import { siteSettings } from '@settings/site.settings';
+import { useTranslation } from 'next-i18next';
+import { useIsRTL } from '@utils/locals';
+import Badge from '@components/ui/badge/badge';
+import { IPaginator, Shop, ShopPaginator } from '@ts-types/generated';
 
 type IProps = {
-  shops: ShopPaginator | null | undefined;
+  shops: IPaginator<Shop>;
   onPagination: (current: number) => void;
 };
 
@@ -20,10 +20,10 @@ const ShopList = ({ shops, onPagination }: IProps) => {
 
   const columns = [
     {
-      title: t("table:table-item-logo"),
-      dataIndex: "logo",
-      key: "logo",
-      align: "center",
+      title: t('table:table-item-logo'),
+      dataIndex: 'logo',
+      key: 'logo',
+      align: 'center',
       width: 74,
       render: (logo: any, record: any) => (
         <Image
@@ -37,47 +37,47 @@ const ShopList = ({ shops, onPagination }: IProps) => {
       ),
     },
     {
-      title: t("table:table-item-title"),
-      dataIndex: "name",
-      key: "name",
+      title: t('table:table-item-title'),
+      dataIndex: 'name',
+      key: 'name',
       align: alignLeft,
       render: (name: any) => <span className="whitespace-nowrap">{name}</span>,
     },
     {
-      title: t("table:table-item-owner-name"),
-      dataIndex: "owner",
-      key: "owner",
-      align: "center",
+      title: t('table:table-item-owner-name'),
+      dataIndex: 'owner',
+      key: 'owner',
+      align: 'center',
       render: (owner: any) => owner.name,
     },
     {
-      title: t("table:table-item-total-products"),
-      dataIndex: "products_count",
-      key: "products_count",
-      align: "center",
+      title: t('table:table-item-total-products'),
+      dataIndex: 'products_count',
+      key: 'products_count',
+      align: 'center',
     },
     {
-      title: t("table:table-item-total-orders"),
-      dataIndex: "orders_count",
-      key: "orders_count",
-      align: "center",
+      title: t('table:table-item-total-orders'),
+      dataIndex: 'orders_count',
+      key: 'orders_count',
+      align: 'center',
     },
     {
-      title: t("table:table-item-status"),
-      dataIndex: "is_active",
-      key: "is_active",
-      align: "center",
+      title: t('table:table-item-status'),
+      dataIndex: 'is_active',
+      key: 'is_active',
+      align: 'center',
       render: (is_active: boolean) => (
         <Badge
-          textKey={is_active ? "common:text-active" : "common:text-inactive"}
-          color={is_active ? "bg-accent" : "bg-red-500"}
+          textKey={is_active ? 'common:text-active' : 'common:text-inactive'}
+          color={is_active ? 'bg-accent' : 'bg-red-500'}
         />
       ),
     },
     {
-      title: t("table:table-item-actions"),
-      dataIndex: "id",
-      key: "actions",
+      title: t('table:table-item-actions'),
+      dataIndex: 'id',
+      key: 'actions',
       align: alignRight,
       render: (id: string, { slug, is_active }: any) => {
         return (
@@ -98,19 +98,19 @@ const ShopList = ({ shops, onPagination }: IProps) => {
         <Table
           //@ts-ignore
           columns={columns}
-          emptyText={t("table:empty-table-data")}
+          emptyText={t('table:empty-table-data')}
           data={data}
           rowKey="id"
           scroll={{ x: 800 }}
         />
       </div>
 
-      {!!paginatorInfo.total && (
+      {!!paginatorInfo.totalDocs && (
         <div className="flex justify-end items-center">
           <Pagination
-            total={paginatorInfo.total}
-            current={paginatorInfo.currentPage}
-            pageSize={paginatorInfo.perPage}
+            total={paginatorInfo.totalPages}
+            current={paginatorInfo.pagingCounter}
+            pageSize={paginatorInfo.totalDocs}
             onChange={onPagination}
           />
         </div>

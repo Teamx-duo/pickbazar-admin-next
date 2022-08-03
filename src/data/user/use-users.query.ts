@@ -1,8 +1,9 @@
-import { QueryParamsType, QueryOptionsType } from "@ts-types/custom.types";
-import { mapPaginatorData } from "@utils/data-mappers";
-import { useQuery } from "react-query";
-import User from "@repositories/user";
-import { API_ENDPOINTS } from "@utils/api/endpoints";
+import { QueryParamsType, QueryOptionsType } from '@ts-types/custom.types';
+import { mapPaginatorData } from '@utils/data-mappers';
+import { useQuery } from 'react-query';
+import User from '@repositories/user';
+import { API_ENDPOINTS } from '@utils/api/endpoints';
+import { IPaginator, User as IUser } from '@ts-types/generated';
 
 const fetchUsers = async ({ queryKey }: QueryParamsType) => {
   const [_key, params] = queryKey;
@@ -10,20 +11,24 @@ const fetchUsers = async ({ queryKey }: QueryParamsType) => {
     page,
     text,
     limit = 15,
-    orderBy = "updated_at",
-    sortedBy = "DESC",
+    orderBy = 'updated_at',
+    sortedBy = 'DESC',
   } = params as QueryOptionsType;
   const url = `${API_ENDPOINTS.USERS}?search=${text}&limit=${limit}&page=${page}&orderBy=${orderBy}&sortedBy=${sortedBy}`;
   const {
-    data: { data, ...rest },
+    data: { docs, ...rest },
   } = await User.all(url);
-  return { users: { data, paginatorInfo: mapPaginatorData({ ...rest }) } };
+  return { users: { data: docs, paginatorInfo: rest } };
 };
 
 const useUsersQuery = (options: QueryOptionsType) => {
-  return useQuery<any, Error>([API_ENDPOINTS.USERS, options], fetchUsers, {
-    keepPreviousData: true,
-  });
+  return useQuery<{ users: IPaginator<IUser> }, Error>(
+    [API_ENDPOINTS.USERS, options],
+    fetchUsers,
+    {
+      keepPreviousData: true,
+    }
+  );
 };
 
 export { useUsersQuery, fetchUsers };

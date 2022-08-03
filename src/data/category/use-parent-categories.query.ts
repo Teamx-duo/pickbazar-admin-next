@@ -1,11 +1,12 @@
 import {
   QueryParamsType,
   CategoriesQueryOptionsType,
-} from "@ts-types/custom.types";
-import { mapPaginatorData, stringifySearchQuery } from "@utils/data-mappers";
-import { useQuery } from "react-query";
-import Category from "@repositories/category";
-import { API_ENDPOINTS } from "@utils/api/endpoints";
+} from '@ts-types/custom.types';
+import { mapPaginatorData, stringifySearchQuery } from '@utils/data-mappers';
+import { useQuery } from 'react-query';
+import Category from '@repositories/category';
+import { API_ENDPOINTS } from '@utils/api/endpoints';
+import { IPaginator, Category as ICategory } from '@ts-types/generated';
 
 const fetchCategories = async ({ queryKey }: QueryParamsType) => {
   const [_key, params] = queryKey;
@@ -15,8 +16,8 @@ const fetchCategories = async ({ queryKey }: QueryParamsType) => {
     text,
     type,
     limit = 15,
-    orderBy = "updated_at",
-    sortedBy = "DESC",
+    orderBy = 'updated_at',
+    sortedBy = 'DESC',
   } = params as CategoriesQueryOptionsType;
 
   const searchString = stringifySearchQuery({
@@ -25,13 +26,15 @@ const fetchCategories = async ({ queryKey }: QueryParamsType) => {
   });
   const url = `${API_ENDPOINTS.PARENT_CATEGORIES}?search=${searchString}&searchJoin=and&limit=${limit}&parent=${parent}&page=${page}&orderBy=${orderBy}&sortedBy=${sortedBy}`;
   const {
-    data: { data, ...rest },
+    data: { docs, ...rest },
   } = await Category.fetchParent(url);
-  return { categories: { data, paginatorInfo: mapPaginatorData({ ...rest }) } };
+  return {
+    categories: { data: docs, paginatorInfo: rest },
+  };
 };
 
 const useParentCategoriesQuery = (options: CategoriesQueryOptionsType) => {
-  return useQuery<any, Error>(
+  return useQuery<{ categories: IPaginator<ICategory> }, Error>(
     [API_ENDPOINTS.PARENT_CATEGORIES, options],
     fetchCategories,
     {

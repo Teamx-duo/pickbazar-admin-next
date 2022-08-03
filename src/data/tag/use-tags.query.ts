@@ -1,9 +1,9 @@
-import { QueryParamsType, TagsQueryOptionsType } from "@ts-types/custom.types";
-import { mapPaginatorData, stringifySearchQuery } from "@utils/data-mappers";
-import { useQuery } from "react-query";
-import Tag from "@repositories/tag";
-import { API_ENDPOINTS } from "@utils/api/endpoints";
-import { TagPaginator } from "@ts-types/generated";
+import { QueryParamsType, TagsQueryOptionsType } from '@ts-types/custom.types';
+import { mapPaginatorData, stringifySearchQuery } from '@utils/data-mappers';
+import { useQuery } from 'react-query';
+import Tag from '@repositories/tag';
+import { API_ENDPOINTS } from '@utils/api/endpoints';
+import { IPaginator, TagPaginator, Tag as ITag } from '@ts-types/generated';
 
 const fetchTags = async ({
   queryKey,
@@ -15,8 +15,8 @@ const fetchTags = async ({
     text,
     type,
     limit = 15,
-    orderBy = "updated_at",
-    sortedBy = "DESC",
+    orderBy = 'updated_at',
+    sortedBy = 'DESC',
   } = params as TagsQueryOptionsType;
 
   const searchString = stringifySearchQuery({
@@ -25,18 +25,18 @@ const fetchTags = async ({
   });
   const url = `${API_ENDPOINTS.TAGS}?search=${searchString}&searchJoin=and&limit=${limit}&page=${page}&orderBy=${orderBy}&sortedBy=${sortedBy}`;
   const {
-    data: { data, ...rest },
+    data: { docs, ...rest },
   } = await Tag.all(url);
   return {
     tags: {
-      data,
-      paginatorInfo: mapPaginatorData({ ...rest }),
+      data: docs,
+      paginatorInfo: rest,
     },
   };
 };
 
 const useTagsQuery = (options: TagsQueryOptionsType) => {
-  return useQuery<{ tags: TagPaginator }, Error>(
+  return useQuery<{ tags: IPaginator<ITag> }, Error>(
     [API_ENDPOINTS.TAGS, options],
     fetchTags,
     {

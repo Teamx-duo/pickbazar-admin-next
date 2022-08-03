@@ -1,11 +1,12 @@
 import {
   QueryParamsType,
   ProductsQueryOptionsType,
-} from "@ts-types/custom.types";
-import { mapPaginatorData, stringifySearchQuery } from "@utils/data-mappers";
-import { useQuery } from "react-query";
-import Product from "@repositories/product";
-import { API_ENDPOINTS } from "@utils/api/endpoints";
+} from '@ts-types/custom.types';
+import { mapPaginatorData, stringifySearchQuery } from '@utils/data-mappers';
+import { useQuery } from 'react-query';
+import Product from '@repositories/product';
+import { API_ENDPOINTS } from '@utils/api/endpoints';
+import { IPaginator, Product as TProduct } from '@ts-types/generated';
 
 const fetchProducts = async ({ queryKey }: QueryParamsType) => {
   const [_key, params] = queryKey;
@@ -17,8 +18,8 @@ const fetchProducts = async ({ queryKey }: QueryParamsType) => {
     shop_id,
     status,
     limit = 15,
-    orderBy = "updated_at",
-    sortedBy = "DESC",
+    orderBy = 'updated_at',
+    sortedBy = 'DESC',
   } = params as ProductsQueryOptionsType;
   const searchString = stringifySearchQuery({
     name: text,
@@ -29,19 +30,23 @@ const fetchProducts = async ({ queryKey }: QueryParamsType) => {
   });
   const url = `${API_ENDPOINTS.PRODUCTS}?search=${searchString}&searchJoin=and&limit=${limit}&page=${page}&orderBy=${orderBy}&sortedBy=${sortedBy}`;
   const {
-    data: { data, ...rest },
+    data: { docs, ...rest },
   } = await Product.all(url);
-  return { products: { data, paginatorInfo: mapPaginatorData({ ...rest }) } };
+  return { products: { data: docs, paginatorInfo: { ...rest } } };
 };
 
 const useProductsQuery = (
   params: ProductsQueryOptionsType,
   options: any = {}
 ) => {
-  return useQuery<any, Error>([API_ENDPOINTS.PRODUCTS, params], fetchProducts, {
-    ...options,
-    keepPreviousData: true,
-  });
+  return useQuery<{ products: IPaginator<TProduct> }, Error>(
+    [API_ENDPOINTS.PRODUCTS, params],
+    fetchProducts,
+    {
+      ...options,
+      keepPreviousData: true,
+    }
+  );
 };
 
 export { useProductsQuery, fetchProducts };

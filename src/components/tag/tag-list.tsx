@@ -1,15 +1,16 @@
-import Pagination from "@components/ui/pagination";
-import { Table } from "@components/ui/table";
-import ActionButtons from "@components/common/action-buttons";
-import { getIcon } from "@utils/get-icon";
-import * as categoriesIcon from "@components/icons/category";
-import { ROUTES } from "@utils/routes";
-import Image from "next/image";
-import { useTranslation } from "next-i18next";
-import { useIsRTL } from "@utils/locals";
+import Pagination from '@components/ui/pagination';
+import { Table } from '@components/ui/table';
+import ActionButtons from '@components/common/action-buttons';
+import { getIcon } from '@utils/get-icon';
+import * as categoriesIcon from '@components/icons/category';
+import { ROUTES } from '@utils/routes';
+import Image from 'next/image';
+import { useTranslation } from 'next-i18next';
+import { useIsRTL } from '@utils/locals';
+import { IPaginator, Tag } from '@ts-types/generated';
 
 export type IProps = {
-  tags: any | undefined | null;
+  tags: IPaginator<Tag> | undefined | null;
   onPagination: (key: number) => void;
 };
 
@@ -22,30 +23,31 @@ const TagList = ({ tags, onPagination }: IProps) => {
 
   const columns = [
     {
-      title: t("table:table-item-id"),
-      dataIndex: "id",
-      key: "id",
-      align: "center",
-      width: 60,
+      title: t('table:table-item-id'),
+      dataIndex: '_id',
+      key: '_id',
+      ellipsis: true,
+      align: 'center',
+      width: 100,
     },
     {
-      title: t("table:table-item-title"),
-      dataIndex: "name",
-      key: "name",
+      title: t('table:table-item-title'),
+      dataIndex: 'name',
+      key: 'name',
       align: alignLeft,
     },
     {
-      title: t("table:table-item-image"),
-      dataIndex: "image",
-      key: "image",
-      align: "center",
+      title: t('table:table-item-image'),
+      dataIndex: 'image',
+      key: 'image',
+      align: 'center',
 
       render: (image: any, { name }: { name: string }) => {
-        if (!image?.thumbnail) return null;
+        if (!image) return null;
 
         return (
           <Image
-            src={image?.thumbnail ?? "/"}
+            src={image ?? '/'}
             alt={name}
             layout="fixed"
             width={40}
@@ -57,10 +59,10 @@ const TagList = ({ tags, onPagination }: IProps) => {
     },
 
     {
-      title: t("table:table-item-icon"),
-      dataIndex: "icon",
-      key: "icon",
-      align: "center",
+      title: t('table:table-item-icon'),
+      dataIndex: 'icon',
+      key: 'icon',
+      align: 'center',
       render: (icon: string) => {
         if (!icon) return null;
         return (
@@ -68,23 +70,23 @@ const TagList = ({ tags, onPagination }: IProps) => {
             {getIcon({
               iconList: categoriesIcon,
               iconName: icon,
-              className: "w-5 h-5 max-h-full max-w-full",
+              className: 'w-5 h-5 max-h-full max-w-full',
             })}
           </span>
         );
       },
     },
     {
-      title: t("table:table-item-slug"),
-      dataIndex: "slug",
-      key: "slug",
-      align: "center",
+      title: t('table:table-item-slug'),
+      dataIndex: 'slug',
+      key: 'slug',
+      align: 'center',
       ellipsis: true,
     },
     {
-      title: t("table:table-item-group"),
-      dataIndex: "type",
-      key: "type",
+      title: t('table:table-item-group'),
+      dataIndex: 'type',
+      key: 'type',
       align: alignLeft,
       width: 120,
       render: (type: any) => (
@@ -97,10 +99,10 @@ const TagList = ({ tags, onPagination }: IProps) => {
       ),
     },
     {
-      title: t("table:table-item-actions"),
-      dataIndex: "id",
-      key: "actions",
-      align: "center",
+      title: t('table:table-item-actions'),
+      dataIndex: 'id',
+      key: 'actions',
+      align: 'center',
       width: 90,
       render: (id: string) => (
         <ActionButtons
@@ -118,24 +120,24 @@ const TagList = ({ tags, onPagination }: IProps) => {
         <Table
           //@ts-ignore
           columns={columns}
-          emptyText={t("table:empty-table-data")}
+          emptyText={t('table:empty-table-data')}
           //@ts-ignore
           data={data}
-          rowKey="id"
+          rowKey="_id"
           scroll={{ x: 1000 }}
           expandable={{
-            expandedRowRender: () => "",
+            expandedRowRender: () => '',
             rowExpandable: rowExpandable,
           }}
         />
       </div>
 
-      {!!paginatorInfo.total && (
+      {!!paginatorInfo.totalPages && (
         <div className="flex justify-end items-center">
           <Pagination
-            total={paginatorInfo.total}
-            current={paginatorInfo.currentPage}
-            pageSize={paginatorInfo.perPage}
+            total={paginatorInfo.totalPages}
+            current={paginatorInfo.pagingCounter}
+            pageSize={paginatorInfo.limit}
             onChange={onPagination}
           />
         </div>
