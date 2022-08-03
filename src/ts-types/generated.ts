@@ -137,7 +137,7 @@ export declare type Coupon = {
   updated_at: Scalars['DateTime'];
 };
 export declare type Product = {
-  id: Scalars['ID'];
+  _id: Scalars['ID'];
   shop_id: Scalars['ID'];
   name: Scalars['String'];
   slug: Scalars['String'];
@@ -253,7 +253,7 @@ export declare type ShippingUpdateInput = {
 };
 
 export declare type Type = {
-  id: Scalars['ID'];
+  _id: Scalars['ID'];
   name: Scalars['String'];
   icon: Scalars['String'];
   slug: Scalars['String'];
@@ -285,7 +285,7 @@ export declare type ProductPaginator = {
   data: Array<Product>;
 };
 export declare type Category = {
-  id: Scalars['ID'];
+  _id: Scalars['ID'];
   name: Scalars['String'];
   slug: Scalars['String'];
   parent?: Maybe<Scalars['Int']>;
@@ -836,7 +836,7 @@ export declare type ShopPaginator = {
 };
 
 export declare type Tag = {
-  id?: Maybe<Scalars['ID']>;
+  _id?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
   slug?: Maybe<Scalars['String']>;
   parent?: Maybe<Scalars['Int']>;

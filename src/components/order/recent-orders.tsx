@@ -1,11 +1,11 @@
-import dayjs from "dayjs";
-import { Table } from "@components/ui/table";
-import usePrice from "@utils/use-price";
-import relativeTime from "dayjs/plugin/relativeTime";
-import utc from "dayjs/plugin/utc";
-import timezone from "dayjs/plugin/timezone";
-import { Order, OrderStatus } from "@ts-types/generated";
-import { useTranslation } from "next-i18next";
+import dayjs from 'dayjs';
+import { Table } from '@components/ui/table';
+import usePrice from '@utils/use-price';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+import { Order, OrderStatus } from '@ts-types/generated';
+import { useTranslation } from 'next-i18next';
 
 type IProps = {
   orders: Order[];
@@ -17,29 +17,30 @@ const RecentOrders = ({ orders, title }: IProps) => {
 
   const columns = [
     {
-      title: t("table:table-item-tracking-number"),
-      dataIndex: "tracking_number",
-      key: "tracking_number",
-      align: "center",
+      title: t('table:table-item-id'),
+      dataIndex: '_id',
+      key: '_id',
+      align: 'center',
       width: 150,
+      ellipses: true,
     },
     {
-      title: t("table:table-item-total"),
-      dataIndex: "total",
-      key: "total",
-      align: "center",
+      title: t('table:table-item-total'),
+      dataIndex: 'total',
+      key: 'total',
+      align: 'center',
       render: (value: any) => {
-        const { price } = usePrice({
-          amount: value,
-        });
-        return <span className="whitespace-nowrap">{price}</span>;
+        // const { price } = usePrice({
+        //   amount: value,
+        // });
+        return <span className="whitespace-nowrap">{value}</span>;
       },
     },
     {
-      title: t("table:table-item-order-date"),
-      dataIndex: "created_at",
-      key: "created_at",
-      align: "center",
+      title: t('table:table-item-order-date'),
+      dataIndex: 'createdAt',
+      key: 'createdAt',
+      align: 'center',
       render: (date: string) => {
         dayjs.extend(relativeTime);
         dayjs.extend(utc);
@@ -52,10 +53,10 @@ const RecentOrders = ({ orders, title }: IProps) => {
       },
     },
     {
-      title: t("table:table-item-status"),
-      dataIndex: "status",
-      key: "status",
-      align: "center",
+      title: t('table:table-item-status'),
+      dataIndex: 'status',
+      key: 'status',
+      align: 'center',
       render: (status: OrderStatus) => (
         <span
           className="whitespace-nowrap font-semibold"
@@ -76,9 +77,9 @@ const RecentOrders = ({ orders, title }: IProps) => {
         <Table
           //@ts-ignore
           columns={columns}
-          emptyText={t("table:empty-table-data")}
+          emptyText={t('table:empty-table-data')}
           data={orders}
-          rowKey="id"
+          rowKey="_id"
           scroll={{ x: 700 }}
         />
       </div>

@@ -25,9 +25,9 @@ const ShopList = ({ shops, onPagination }: IProps) => {
       key: 'logo',
       align: 'center',
       width: 74,
-      render: (logo: any, record: any) => (
+      render: (logo: string, record: any) => (
         <Image
-          src={logo?.thumbnail ?? siteSettings.product.placeholder}
+          src={logo ?? siteSettings.product.placeholder}
           alt={record?.name}
           layout="fixed"
           width={42}
@@ -76,7 +76,7 @@ const ShopList = ({ shops, onPagination }: IProps) => {
     },
     {
       title: t('table:table-item-actions'),
-      dataIndex: 'id',
+      dataIndex: '_id',
       key: 'actions',
       align: alignRight,
       render: (id: string, { slug, is_active }: any) => {

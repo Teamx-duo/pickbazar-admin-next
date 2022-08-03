@@ -68,7 +68,6 @@ export default function AllShopPage() {
           />
         </div>
       </Card>
-      {console.log("SHOPS", data)}
       <ShopList shops={data?.shops} onPagination={handlePagination} />
     </>
   );

@@ -22,7 +22,7 @@ const ProductGroupInput = ({ control, error }: Props) => {
         name="type"
         control={control}
         getOptionLabel={(option: any) => option.name}
-        getOptionValue={(option: any) => option.id}
+        getOptionValue={(option: any) => option._id}
         options={data?.types!}
         isLoading={loading}
       />

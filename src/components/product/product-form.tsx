@@ -1,24 +1,24 @@
-import Input from "@components/ui/input";
-import TextArea from "@components/ui/text-area";
-import { useForm, FormProvider } from "react-hook-form";
-import Button from "@components/ui/button";
-import Description from "@components/ui/description";
-import Card from "@components/common/card";
-import Label from "@components/ui/label";
-import Radio from "@components/ui/radio/radio";
-import { useRouter } from "next/router";
-import { yupResolver } from "@hookform/resolvers/yup";
-import FileInput from "@components/ui/file-input";
-import { productValidationSchema } from "./product-validation-schema";
-import groupBy from "lodash/groupBy";
-import ProductVariableForm from "./product-variable-form";
-import ProductSimpleForm from "./product-simple-form";
-import ProductGroupInput from "./product-group-input";
-import ProductCategoryInput from "./product-category-input";
-import orderBy from "lodash/orderBy";
-import sum from "lodash/sum";
-import cloneDeep from "lodash/cloneDeep";
-import ProductTypeInput from "./product-type-input";
+import Input from '@components/ui/input';
+import TextArea from '@components/ui/text-area';
+import { useForm, FormProvider } from 'react-hook-form';
+import Button from '@components/ui/button';
+import Description from '@components/ui/description';
+import Card from '@components/common/card';
+import Label from '@components/ui/label';
+import Radio from '@components/ui/radio/radio';
+import { useRouter } from 'next/router';
+import { yupResolver } from '@hookform/resolvers/yup';
+import FileInput from '@components/ui/file-input';
+import { productValidationSchema } from './product-validation-schema';
+import groupBy from 'lodash/groupBy';
+import ProductVariableForm from './product-variable-form';
+import ProductSimpleForm from './product-simple-form';
+import ProductGroupInput from './product-group-input';
+import ProductCategoryInput from './product-category-input';
+import orderBy from 'lodash/orderBy';
+import sum from 'lodash/sum';
+import cloneDeep from 'lodash/cloneDeep';
+import ProductTypeInput from './product-type-input';
 import {
   Type,
   ProductType,
@@ -28,15 +28,15 @@ import {
   Product,
   VariationOption,
   Tag,
-} from "@ts-types/generated";
-import { useCreateProductMutation } from "@data/product/product-create.mutation";
-import { useTranslation } from "next-i18next";
-import { useUpdateProductMutation } from "@data/product/product-update.mutation";
-import { useShopQuery } from "@data/shop/use-shop.query";
-import ProductTagInput from "./product-tag-input";
-import Alert from "@components/ui/alert";
-import { useState } from "react";
-import { animateScroll } from "react-scroll";
+} from '@ts-types/generated';
+import { useCreateProductMutation } from '@data/product/product-create.mutation';
+import { useTranslation } from 'next-i18next';
+import { useUpdateProductMutation } from '@data/product/product-update.mutation';
+import { useShopQuery } from '@data/shop/use-shop.query';
+import ProductTagInput from './product-tag-input';
+import Alert from '@components/ui/alert';
+import { useState } from 'react';
+import { animateScroll } from 'react-scroll';
 
 type Variation = {
   formName: number;
@@ -66,21 +66,21 @@ type FormValues = {
   length: string;
   isVariation: boolean;
   variations: Variation[];
-  variation_options: Product["variation_options"];
+  variation_options: Product['variation_options'];
   [key: string]: any;
 };
 const defaultValues = {
-  sku: "",
-  name: "",
-  type: "",
-  productTypeValue: { name: "Simple Product", value: ProductType.Simple },
-  description: "",
-  unit: "",
-  price: "",
+  sku: '',
+  name: '',
+  type: '',
+  productTypeValue: { name: 'Simple Product', value: ProductType.Simple },
+  description: '',
+  unit: '',
+  price: '',
   min_price: 0.0,
   max_price: 0.0,
-  sale_price: "",
-  quantity: "",
+  sale_price: '',
+  quantity: '',
   categories: [],
   tags: [],
   in_stock: true,
@@ -88,9 +88,9 @@ const defaultValues = {
   image: [],
   gallery: [],
   status: ProductStatus.Publish,
-  width: "",
-  height: "",
-  length: "",
+  width: '',
+  height: '',
+  length: '',
   isVariation: false,
   variations: [],
   variation_options: [],
@@ -101,11 +101,11 @@ type IProps = {
 };
 
 const productType = [
-  { name: "Simple Product", value: ProductType.Simple },
-  { name: "Variable Product", value: ProductType.Variable },
+  { name: 'Simple Product', value: ProductType.Simple },
+  { name: 'Variable Product', value: ProductType.Variable },
 ];
 function getFormattedVariations(variations: any) {
-  const variationGroup = groupBy(variations, "attribute.slug");
+  const variationGroup = groupBy(variations, 'attribute.slug');
   return Object.values(variationGroup)?.map((vg) => {
     return {
       attribute: vg?.[0]?.attribute,
@@ -129,8 +129,8 @@ function calculateMaxMinPrice(variationOptions: any) {
       max_price: null,
     };
   }
-  const sortedVariationsByPrice = orderBy(variationOptions, ["price"]);
-  const sortedVariationsBySalePrice = orderBy(variationOptions, ["sale_price"]);
+  const sortedVariationsByPrice = orderBy(variationOptions, ['price']);
+  const sortedVariationsBySalePrice = orderBy(variationOptions, ['sale_price']);
   return {
     min_price:
       sortedVariationsBySalePrice?.[0].sale_price <
@@ -209,29 +209,23 @@ export default function CreateOrUpdateProductForm({ initialValues }: IProps) {
           ? values?.quantity
           : calculateQuantity(values?.variation_options),
       product_type: values.productTypeValue?.value,
-      type_id: type?.id,
+      type: type?._id,
       ...(initialValues
         ? { shop_id: initialValues?.shop_id }
         : { shop_id: Number(shopId) }),
       price: Number(values.price),
       sale_price: values.sale_price ? Number(values.sale_price) : null,
-      categories: values?.categories?.map(({ id }: any) => id),
-      tags: values?.tags?.map(({ id }: any) => id),
-      image: {
-        thumbnail: values?.image?.thumbnail,
-        original: values?.image?.original,
-        id: values?.image?.id,
-      },
-      gallery: values.gallery?.map(({ thumbnail, original, id }: any) => ({
-        thumbnail,
-        original,
-        id,
-      })),
-      ...(productTypeValue?.value === ProductType.Variable && {
-        variations: values?.variations?.flatMap(({ value }: any) =>
-          value?.map(({ id }: any) => ({ attribute_value_id: id }))
-        ),
-      }),
+      categories: values?.categories?.map((c) => c._id),
+      tags: values?.tags?.map((t) => t._id),
+      image: values?.image,
+      gallery: values.gallery,
+      ...(productTypeValue?.value === ProductType.Variable
+        ? {
+            variations: values?.variations?.flatMap(({ value }: any) =>
+              value?.map(({ id }: any) => ({ attribute_value_id: id }))
+            ),
+          }
+        : {}),
       ...(productTypeValue?.value === ProductType.Variable
         ? {
             variation_options: {
@@ -260,22 +254,24 @@ export default function CreateOrUpdateProductForm({ initialValues }: IProps) {
             },
           }
         : {
-            variations: [],
-            variation_options: {
-              upsert: [],
-              delete: initialValues?.variation_options?.map(
-                (variation) => variation?.id
-              ),
-            },
+            // variations: [],
+            // variation_options: {
+            //   upsert: [],
+            //   delete: initialValues?.variation_options?.map(
+            //     (variation) => variation?.id
+            //   ),
+            // },
           }),
-      ...calculateMaxMinPrice(values?.variation_options),
+      ...(productTypeValue?.value === ProductType.Variable && {
+        ...calculateMaxMinPrice(values?.variation_options),
+      }),
     };
 
     if (initialValues) {
       updateProduct(
         {
           variables: {
-            id: initialValues.id,
+            id: initialValues._id,
             input: inputValues,
           },
         },
@@ -283,7 +279,7 @@ export default function CreateOrUpdateProductForm({ initialValues }: IProps) {
           onError: (error: any) => {
             Object.keys(error?.response?.data).forEach((field: any) => {
               setError(field, {
-                type: "manual",
+                type: 'manual',
                 message: error?.response?.data[field][0],
               });
             });
@@ -303,7 +299,7 @@ export default function CreateOrUpdateProductForm({ initialValues }: IProps) {
             } else {
               Object.keys(error?.response?.data).forEach((field: any) => {
                 setError(field, {
-                  type: "manual",
+                  type: 'manual',
                   message: error?.response?.data[field][0],
                 });
               });
@@ -313,7 +309,7 @@ export default function CreateOrUpdateProductForm({ initialValues }: IProps) {
       );
     }
   };
-  const productTypeValue = watch("productTypeValue");
+  const productTypeValue = watch('productTypeValue');
   return (
     <>
       {errorMessage ? (
@@ -329,8 +325,8 @@ export default function CreateOrUpdateProductForm({ initialValues }: IProps) {
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <div className="flex flex-wrap pb-8 border-b border-dashed border-border-base my-5 sm:my-8">
             <Description
-              title={t("form:featured-image-title")}
-              details={t("form:featured-image-help-text")}
+              title={t('form:featured-image-title')}
+              details={t('form:featured-image-help-text')}
               className="w-full px-0 sm:pe-4 md:pe-5 pb-5 sm:w-4/12 md:w-1/3 sm:py-8"
             />
 
@@ -341,8 +337,8 @@ export default function CreateOrUpdateProductForm({ initialValues }: IProps) {
 
           <div className="flex flex-wrap pb-8 border-b border-dashed border-border-base my-5 sm:my-8">
             <Description
-              title={t("form:gallery-title")}
-              details={t("form:gallery-help-text")}
+              title={t('form:gallery-title')}
+              details={t('form:gallery-help-text')}
               className="w-full px-0 sm:pe-4 md:pe-5 pb-5 sm:w-4/12 md:w-1/3 sm:py-8"
             />
 
@@ -353,8 +349,8 @@ export default function CreateOrUpdateProductForm({ initialValues }: IProps) {
 
           <div className="flex flex-wrap pb-8 border-b border-dashed border-border-base my-5 sm:my-8">
             <Description
-              title={t("form:type-and-category")}
-              details={t("form:type-and-category-help-text")}
+              title={t('form:type-and-category')}
+              details={t('form:type-and-category-help-text')}
               className="w-full px-0 sm:pe-4 md:pe-5 pb-5 sm:w-4/12 md:w-1/3 sm:py-8"
             />
 
@@ -370,53 +366,53 @@ export default function CreateOrUpdateProductForm({ initialValues }: IProps) {
 
           <div className="flex flex-wrap my-5 sm:my-8">
             <Description
-              title={t("form:item-description")}
+              title={t('form:item-description')}
               details={`${
                 initialValues
-                  ? t("form:item-description-edit")
-                  : t("form:item-description-add")
-              } ${t("form:product-description-help-text")}`}
+                  ? t('form:item-description-edit')
+                  : t('form:item-description-add')
+              } ${t('form:product-description-help-text')}`}
               className="w-full px-0 sm:pe-4 md:pe-5 pb-5 sm:w-4/12 md:w-1/3 sm:py-8"
             />
 
             <Card className="w-full sm:w-8/12 md:w-2/3">
               <Input
-                label={`${t("form:input-label-name")}*`}
-                {...register("name")}
+                label={`${t('form:input-label-name')}*`}
+                {...register('name')}
                 error={t(errors.name?.message!)}
                 variant="outline"
                 className="mb-5"
               />
 
               <Input
-                label={`${t("form:input-label-unit")}*`}
-                {...register("unit")}
+                label={`${t('form:input-label-unit')}*`}
+                {...register('unit')}
                 error={t(errors.unit?.message!)}
                 variant="outline"
                 className="mb-5"
               />
 
               <TextArea
-                label={t("form:input-label-description")}
-                {...register("description")}
+                label={t('form:input-label-description')}
+                {...register('description')}
                 error={t(errors.description?.message!)}
                 variant="outline"
                 className="mb-5"
               />
 
               <div>
-                <Label>{t("form:input-label-status")}</Label>
+                <Label>{t('form:input-label-status')}</Label>
                 <Radio
-                  {...register("status")}
-                  label={t("form:input-label-published")}
+                  {...register('status')}
+                  label={t('form:input-label-published')}
                   id="published"
                   value="publish"
                   className="mb-2"
                 />
                 <Radio
-                  {...register("status")}
+                  {...register('status')}
                   id="draft"
-                  label={t("form:input-label-draft")}
+                  label={t('form:input-label-draft')}
                   value="draft"
                 />
               </div>
@@ -425,8 +421,8 @@ export default function CreateOrUpdateProductForm({ initialValues }: IProps) {
 
           <div className="flex flex-wrap pb-8 border-b border-dashed border-border-base my-5 sm:my-8">
             <Description
-              title={t("form:form-title-product-type")}
-              details={t("form:form-description-product-type")}
+              title={t('form:form-title-product-type')}
+              details={t('form:form-description-product-type')}
               className="w-full px-0 sm:pr-4 md:pr-5 pb-5 sm:w-4/12 md:w-1/3 sm:py-8"
             />
 
@@ -454,13 +450,13 @@ export default function CreateOrUpdateProductForm({ initialValues }: IProps) {
                 className="me-4"
                 type="button"
               >
-                {t("form:button-label-back")}
+                {t('form:button-label-back')}
               </Button>
             )}
             <Button loading={updating || creating}>
               {initialValues
-                ? t("form:button-label-update-product")
-                : t("form:button-label-add-product")}
+                ? t('form:button-label-update-product')
+                : t('form:button-label-add-product')}
             </Button>
           </div>
         </form>

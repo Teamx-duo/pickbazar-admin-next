@@ -22,10 +22,10 @@ export const stringifySearchQuery = (values: any) => {
   return Object.keys(parsedValues)
     .map((k) => {
       if (k === 'type') {
-        return `${k}.slug:${parsedValues[k]};`;
+        return `${k}:${parsedValues[k]};`;
       }
       if (k === 'category') {
-        return `categories.slug:${parsedValues[k]};`;
+        return `categories:${parsedValues[k]};`;
       }
       return `${k}:${parsedValues[k]};`;
     })

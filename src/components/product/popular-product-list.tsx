@@ -62,10 +62,10 @@ const PopularProductList = ({ products, title }: IProps) => {
       align: alignRight,
       width: 100,
       render: (value: number) => {
-        const { price } = usePrice({
-          amount: value,
-        });
-        return <span>{price}</span>;
+        // const { price } = usePrice({
+        //   amount: value,
+        // });
+        return <span>{value}</span>;
       },
     },
     {
