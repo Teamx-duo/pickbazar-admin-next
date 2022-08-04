@@ -1,9 +1,9 @@
-import { UpdateOrder } from "@ts-types/generated";
-import { useMutation, useQueryClient } from "react-query";
-import Order from "@repositories/order";
-import { API_ENDPOINTS } from "@utils/api/endpoints";
-import { toast } from "react-toastify";
-import { useTranslation } from "next-i18next";
+import { UpdateOrder } from '@ts-types/generated';
+import { useMutation, useQueryClient } from 'react-query';
+import Order from '@repositories/order';
+import { API_ENDPOINTS } from '@utils/api/endpoints';
+import { toast } from 'react-toastify';
+import { useTranslation } from 'next-i18next';
 
 export interface IOrderUpdateVariables {
   variables: { id: string; input: UpdateOrder };
@@ -17,11 +17,14 @@ export const useUpdateOrderMutation = () => {
       Order.update(`${API_ENDPOINTS.ORDERS}/${id}`, input),
     {
       onSuccess: () => {
-        toast.success(t("common:update-success"));
+        toast.success(t('common:update-success'));
       },
       // Always refetch after error or success:
       onSettled: () => {
         queryClient.invalidateQueries(API_ENDPOINTS.ORDERS);
+      },
+      onError: (err) => {
+        toast.error('Something went wrong');
       },
     }
   );

@@ -10,12 +10,13 @@ import { useUploadMutation } from '@data/upload/use-upload.mutation';
 const getPreviewImage = (value: any) => {
   let images: any[] = [];
   if (value) {
-    images = Array.isArray(value) ? value : [{ ...value }];
+    images = Array.isArray(value) ? value : [value];
   }
   return images;
 };
 export default function Uploader({ onChange, value, multiple }: any) {
   const { t } = useTranslation();
+  console.log(getPreviewImage(value));
   const [files, setFiles] = useState<Attachment[]>(getPreviewImage(value));
   const { mutate: upload, isLoading: loading } = useUploadMutation();
   const { getRootProps, getInputProps } = useDropzone({
@@ -46,7 +47,7 @@ export default function Uploader({ onChange, value, multiple }: any) {
   });
 
   const handleDelete = (image: string) => {
-    const images = files.filter((file) => file.thumbnail !== image);
+    const images = files.filter((file) => file !== image);
 
     setFiles(images);
     if (onChange) {

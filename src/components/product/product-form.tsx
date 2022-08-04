@@ -156,7 +156,7 @@ export default function CreateOrUpdateProductForm({ initialValues }: IProps) {
   const { data: shopData } = useShopQuery(router.query.shop as string, {
     enabled: !!router.query.shop,
   });
-  const shopId = shopData?.shop?.id!;
+  const shopId = shopData?.shop?._id!;
   const methods = useForm<FormValues>({
     resolver: yupResolver(productValidationSchema),
     shouldUnregister: true,
@@ -210,20 +210,22 @@ export default function CreateOrUpdateProductForm({ initialValues }: IProps) {
           : calculateQuantity(values?.variation_options),
       product_type: values.productTypeValue?.value,
       type: type?._id,
-      ...(initialValues
-        ? { shop_id: initialValues?.shop_id }
-        : { shop_id: Number(shopId) }),
-      price: Number(values.price),
-      sale_price: values.sale_price ? Number(values.sale_price) : null,
+      ...(initialValues ? { shop: initialValues?.shop._id } : { shop: shopId }),
+      ...(productTypeValue?.value === ProductType.Simple
+        ? {
+            price: Number(values.price),
+            sale_price: values.sale_price ? Number(values.sale_price) : null,
+          }
+        : {}),
       categories: values?.categories?.map((c) => c._id),
       tags: values?.tags?.map((t) => t._id),
       image: values?.image,
       gallery: values.gallery,
       ...(productTypeValue?.value === ProductType.Variable
         ? {
-            variations: values?.variations?.flatMap(({ value }: any) =>
-              value?.map(({ id }: any) => ({ attribute_value_id: id }))
-            ),
+            variations: values?.variations?.flatMap(({ value }: any) => {
+              return value?.map(({ _id }: any) => _id);
+            }),
           }
         : {}),
       ...(productTypeValue?.value === ProductType.Variable
@@ -244,10 +246,10 @@ export default function CreateOrUpdateProductForm({ initialValues }: IProps) {
                 ?.map((initialVariationOption) => {
                   const find = values?.variation_options?.find(
                     (variationOption) =>
-                      variationOption?.id === initialVariationOption?.id
+                      variationOption?._id === initialVariationOption?._id
                   );
                   if (!find) {
-                    return initialVariationOption?.id;
+                    return initialVariationOption?._id;
                   }
                 })
                 .filter((item) => item !== undefined),

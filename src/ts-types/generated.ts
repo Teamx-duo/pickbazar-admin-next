@@ -116,7 +116,7 @@ export declare type Order = {
   shipping_address?: Maybe<UserAddress>;
 };
 export declare type OrderStatus = {
-  id: Scalars['ID'];
+  _id: Scalars['ID'];
   name: Scalars['String'];
   color: Scalars['String'];
   serial: Scalars['Int'];
@@ -124,7 +124,7 @@ export declare type OrderStatus = {
   updated_at: Scalars['DateTime'];
 };
 export declare type Coupon = {
-  id: Scalars['ID'];
+  _id: Scalars['ID'];
   code: Scalars['String'];
   description: Scalars['String'];
   orders: Array<Order>;
@@ -133,12 +133,12 @@ export declare type Coupon = {
   amount: Scalars['Float'];
   active_from: Scalars['DateTime'];
   expire_at: Scalars['DateTime'];
-  created_at: Scalars['DateTime'];
-  updated_at: Scalars['DateTime'];
+  createdAt: Scalars['DateTime'];
+  updatedAt: Scalars['DateTime'];
 };
 export declare type Product = {
   _id: Scalars['ID'];
-  shop_id: Scalars['ID'];
+  shop: Shop;
   name: Scalars['String'];
   slug: Scalars['String'];
   type: Type;
@@ -187,7 +187,7 @@ export interface IPaginatorInfo {
 
 export declare type Variation = {
   __typename?: 'Variation';
-  id?: Maybe<Scalars['ID']>;
+  _id?: Maybe<Scalars['ID']>;
   title?: Maybe<Scalars['String']>;
   price?: Maybe<Scalars['Float']>;
   sku?: Maybe<Scalars['String']>;
@@ -257,14 +257,15 @@ export declare type Type = {
   name: Scalars['String'];
   icon: Scalars['String'];
   slug: Scalars['String'];
-  promotional_sliders?: Maybe<Array<Maybe<Attachment>>>;
+  promotional_sliders?: Maybe<Array<Maybe<Scalars['String']>>>;
   settings?: Maybe<TypeSettings>;
   products?: Maybe<ProductPaginator>;
-  created_at: Scalars['DateTime'];
-  updated_at: Scalars['DateTime'];
+  createdAt: Scalars['DateTime'];
+  updatedAt: Scalars['DateTime'];
 };
 
 export declare type TypeSettings = {
+  _id: Scalars['ID'];
   isHome?: Maybe<Scalars['Boolean']>;
   layoutType?: Maybe<Scalars['String']>;
   productCard?: Maybe<Scalars['String']>;
@@ -311,7 +312,7 @@ export declare type AttributeValue = {
   pivot?: Maybe<VariationProductPivot>;
 };
 export declare type Attribute = {
-  id: Scalars['ID'];
+  _id: Scalars['ID'];
   name: Scalars['String'];
   slug: Scalars['String'];
   values: Array<AttributeValue>;
@@ -389,7 +390,6 @@ export declare type AttributeValueInput = {
 };
 export declare type AttributeInput = {
   name: Scalars['String'];
-  shop_id: Scalars['Int'];
   values: AttributeValueInput;
 };
 export declare type AttributeValueCreateInput = {
@@ -465,7 +465,7 @@ export enum ShippingType {
 }
 
 export type Tax = {
-  id?: Maybe<Scalars['ID']>;
+  _id?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
   rate?: Maybe<Scalars['Float']>;
   is_global?: Maybe<Scalars['Boolean']>;
@@ -474,6 +474,8 @@ export type Tax = {
   zip?: Maybe<Scalars['String']>;
   city?: Maybe<Scalars['String']>;
   priority?: Maybe<Scalars['Int']>;
+  createdAt?: Maybe<Scalars['Int']>;
+  updatedAt?: Maybe<Scalars['Date']>;
   on_shipping?: Maybe<Scalars['Boolean']>;
 };
 
@@ -730,7 +732,8 @@ export declare type TotalYearSaleByMonth = {
 
 export type CreateTypeInput = {
   name: Scalars['String'];
-  gallery?: Maybe<Array<AttachmentInput>>;
+  image?: Scalars['String'];
+  promotional_sliders?: Maybe<Array<Scalars['String']>>;
   icon?: Maybe<Scalars['String']>;
   banner_text?: Maybe<Scalars['String']>;
 };
@@ -769,8 +772,7 @@ export declare enum WithdrawStatus {
 }
 
 export declare type Shop = {
-  id?: Maybe<Scalars['ID']>;
-  owner_id?: Maybe<Scalars['Int']>;
+  _id?: Maybe<Scalars['String']>;
   owner?: Maybe<User>;
   staffs?: Maybe<Array<Maybe<User>>>;
   is_active?: Maybe<Scalars['Boolean']>;
@@ -784,8 +786,8 @@ export declare type Shop = {
   logo?: Maybe<Scalars['String']>;
   address?: Maybe<UserAddress>;
   settings?: Maybe<ShopSettings>;
-  created_at?: Maybe<Scalars['DateTime']>;
-  updated_at?: Maybe<Scalars['DateTime']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export declare type PaymentInfo = {
@@ -973,6 +975,7 @@ export declare type ContactDetailsInput = {
 };
 
 export declare type TypeSettingsInput = {
+  _id?: Scalars['String'];
   isHome?: Maybe<Scalars['Boolean']>;
   layoutType?: Maybe<Scalars['String']>;
   productCard?: Maybe<Scalars['String']>;

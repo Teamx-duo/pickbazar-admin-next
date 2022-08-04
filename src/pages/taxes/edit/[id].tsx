@@ -19,7 +19,7 @@ export default function UpdateTaxPage() {
     <>
       <div className="py-5 sm:py-8 flex border-b border-dashed border-border-base">
         <h1 className="text-lg font-semibold text-heading">
-          Update Tax #{data?.id}
+          Update Tax #{data?._id}
         </h1>
       </div>
       <CreateOrUpdateTaxForm initialValues={data} />

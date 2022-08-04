@@ -58,8 +58,8 @@ export default function Orders() {
             }}
             options={[
               { value: 'total', label: 'Total' },
-              { value: 'created_at', label: 'Created At' },
-              { value: 'updated_at', label: 'Updated At' },
+              { value: 'createdAt', label: 'Created At' },
+              { value: 'updatedAt', label: 'Updated At' },
             ]}
           />
         </div>

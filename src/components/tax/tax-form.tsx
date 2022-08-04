@@ -43,7 +43,7 @@ export default function CreateOrUpdateTaxForm({ initialValues }: IProps) {
     if (initialValues) {
       updateTaxClass({
         variables: {
-          id: initialValues.id!,
+          id: initialValues._id!,
           input: {
             ...values,
           },

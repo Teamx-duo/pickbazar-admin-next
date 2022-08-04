@@ -111,7 +111,7 @@ const OrderList = ({ orders, onPagination }: IProps) => {
     {
       // title: "Download",
       title: t('common:text-download'),
-      dataIndex: 'id',
+      dataIndex: '_id',
       key: 'download',
       align: 'center',
       render: (_id: string, order: Order) => (
@@ -129,7 +129,7 @@ const OrderList = ({ orders, onPagination }: IProps) => {
     },
     {
       title: t('table:table-item-actions'),
-      dataIndex: 'id',
+      dataIndex: '_id',
       key: 'actions',
       align: 'center',
       width: 100,

@@ -46,13 +46,13 @@ const OrderStatusList = ({ order_statuses, onPagination }: IProps) => {
     },
     {
       title: t('table:table-item-actions'),
-      dataIndex: 'id',
+      dataIndex: '_id',
       key: 'actions',
       align: alignRight,
       render: (id: string, record: OrderStatus) => (
         <ActionButtons
           id={id}
-          editUrl={`${ROUTES.ORDER_STATUS}/edit/${record?.name}`}
+          editUrl={`${ROUTES.ORDER_STATUS}/edit/${record?._id}`}
           deleteModalView="DELETE_ORDER_STATUS"
         />
       ),

@@ -115,7 +115,7 @@ const CategoryList = ({ categories, onPagination }: IProps) => {
     },
     {
       title: t('table:table-item-actions'),
-      dataIndex: 'id',
+      dataIndex: '_id',
       key: 'actions',
       align: 'center',
       width: 90,

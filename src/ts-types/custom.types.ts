@@ -65,7 +65,7 @@ export type StaffsQueryOptionsType = {
 export type QueryOptionsType = {
   page?: number;
   text?: string;
-  shop_id?: number;
+  shop_id?: string;
   limit?: number;
   orderBy?: string;
   sortedBy?: SortOrder;

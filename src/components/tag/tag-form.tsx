@@ -1,24 +1,24 @@
-import Input from "@components/ui/input";
-import { Control, FieldErrors, useForm } from "react-hook-form";
-import Button from "@components/ui/button";
-import TextArea from "@components/ui/text-area";
-import Label from "@components/ui/label";
-import Card from "@components/common/card";
-import Description from "@components/ui/description";
-import * as categoriesIcon from "@components/icons/category";
-import { getIcon } from "@utils/get-icon";
-import { useRouter } from "next/router";
-import { getErrorMessage } from "@utils/form-error";
-import ValidationError from "@components/ui/form-validation-error";
-import { tagIcons } from "./tag-icons";
-import { useTranslation } from "next-i18next";
-import FileInput from "@components/ui/file-input";
-import SelectInput from "@components/ui/select-input";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { tagValidationSchema } from "./tag-validation-schema";
-import { useTypesQuery } from "@data/type/use-types.query";
-import { useCreateTagMutation } from "@data/tag/use-tag-create.mutation";
-import { useUpdateTagMutation } from "@data/tag/use-tag-update.mutation";
+import Input from '@components/ui/input';
+import { Control, FieldErrors, useForm } from 'react-hook-form';
+import Button from '@components/ui/button';
+import TextArea from '@components/ui/text-area';
+import Label from '@components/ui/label';
+import Card from '@components/common/card';
+import Description from '@components/ui/description';
+import * as categoriesIcon from '@components/icons/category';
+import { getIcon } from '@utils/get-icon';
+import { useRouter } from 'next/router';
+import { getErrorMessage } from '@utils/form-error';
+import ValidationError from '@components/ui/form-validation-error';
+import { tagIcons } from './tag-icons';
+import { useTranslation } from 'next-i18next';
+import FileInput from '@components/ui/file-input';
+import SelectInput from '@components/ui/select-input';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { tagValidationSchema } from './tag-validation-schema';
+import { useTypesQuery } from '@data/type/use-types.query';
+import { useCreateTagMutation } from '@data/tag/use-tag-create.mutation';
+import { useUpdateTagMutation } from '@data/tag/use-tag-update.mutation';
 
 function SelectTypes({
   control,
@@ -31,7 +31,7 @@ function SelectTypes({
   const { data: types, isLoading: loading } = useTypesQuery();
   return (
     <div className="mb-5">
-      <Label>{t("form:input-label-types")}</Label>
+      <Label>{t('form:input-label-types')}</Label>
       <SelectInput
         name="type"
         control={control}
@@ -52,7 +52,7 @@ export const updatedIcons = tagIcons.map((item: any) => {
         {getIcon({
           iconList: categoriesIcon,
           iconName: item.value,
-          className: "max-h-full max-w-full",
+          className: 'max-h-full max-w-full',
         })}
       </span>
       <span>{item.label}</span>
@@ -70,17 +70,18 @@ type FormValues = {
 };
 
 const defaultValues = {
-  image: "",
-  name: "",
-  details: "",
-  icon: "",
-  type: "",
+  image: '',
+  name: '',
+  details: '',
+  icon: '',
+  type: '',
 };
 
 type IProps = {
   initialValues?: any;
 };
 export default function CreateOrUpdateTagForm({ initialValues }: IProps) {
+  console.log(initialValues)
   const router = useRouter();
   const { t } = useTranslation();
   const {
@@ -97,7 +98,7 @@ export default function CreateOrUpdateTagForm({ initialValues }: IProps) {
             ? tagIcons.find(
                 (singleIcon) => singleIcon.value === initialValues?.icon!
               )
-            : "",
+            : '',
         }
       : defaultValues,
 
@@ -111,19 +112,15 @@ export default function CreateOrUpdateTagForm({ initialValues }: IProps) {
     const input = {
       name: values.name,
       details: values.details,
-      image: {
-        thumbnail: values?.image?.thumbnail,
-        original: values?.image?.original,
-        id: values?.image?.id,
-      },
-      icon: values.icon?.value ?? "",
-      type_id: values.type?.id,
+      image: values?.image,
+      icon: values.icon?.value ?? '',
+      type: values.type?._id,
     };
     try {
       if (initialValues) {
         updateTag({
           variables: {
-            id: initialValues?.id!,
+            id: initialValues?._id!,
             input: {
               ...input,
             },
@@ -145,8 +142,8 @@ export default function CreateOrUpdateTagForm({ initialValues }: IProps) {
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-wrap pb-8 border-b border-dashed border-gray-300 my-5 sm:my-8">
         <Description
-          title={t("form:input-label-image")}
-          details={t("form:tag-image-helper-text")}
+          title={t('form:input-label-image')}
+          details={t('form:tag-image-helper-text')}
           className="w-full px-0 sm:pe-4 md:pe-5 pb-5 sm:w-4/12 md:w-1/3 sm:py-8"
         />
 
@@ -157,33 +154,33 @@ export default function CreateOrUpdateTagForm({ initialValues }: IProps) {
 
       <div className="flex flex-wrap my-5 sm:my-8">
         <Description
-          title={t("form:input-label-description")}
+          title={t('form:input-label-description')}
           details={`${
             initialValues
-              ? t("form:item-description-edit")
-              : t("form:item-description-add")
-          } ${t("form:tag-description-helper-text")}`}
+              ? t('form:item-description-edit')
+              : t('form:item-description-add')
+          } ${t('form:tag-description-helper-text')}`}
           className="w-full px-0 sm:pe-4 md:pe-5 pb-5 sm:w-4/12 md:w-1/3 sm:py-8 "
         />
 
         <Card className="w-full sm:w-8/12 md:w-2/3">
           <Input
-            label={t("form:input-label-name")}
-            {...register("name")}
+            label={t('form:input-label-name')}
+            {...register('name')}
             error={t(errors.name?.message!)}
             variant="outline"
             className="mb-5"
           />
 
           <TextArea
-            label={t("form:input-label-details")}
-            {...register("details")}
+            label={t('form:input-label-details')}
+            {...register('details')}
             variant="outline"
             className="mb-5"
           />
 
           <div className="mb-5">
-            <Label>{t("form:input-label-select-icon")}</Label>
+            <Label>{t('form:input-label-select-icon')}</Label>
             <SelectInput
               name="icon"
               control={control}
@@ -202,14 +199,14 @@ export default function CreateOrUpdateTagForm({ initialValues }: IProps) {
             className="me-4"
             type="button"
           >
-            {t("form:button-label-back")}
+            {t('form:button-label-back')}
           </Button>
         )}
 
         <Button loading={creating || updating}>
           {initialValues
-            ? t("form:button-label-update-tag")
-            : t("form:button-label-add-tag")}
+            ? t('form:button-label-update-tag')
+            : t('form:button-label-add-tag')}
         </Button>
       </div>
     </form>

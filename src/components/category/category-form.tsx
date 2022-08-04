@@ -1,32 +1,32 @@
-import Input from "@components/ui/input";
+import Input from '@components/ui/input';
 import {
   Control,
   FieldErrors,
   useForm,
   useFormState,
   useWatch,
-} from "react-hook-form";
-import Button from "@components/ui/button";
-import TextArea from "@components/ui/text-area";
-import Label from "@components/ui/label";
-import Card from "@components/common/card";
-import Description from "@components/ui/description";
-import * as categoriesIcon from "@components/icons/category";
-import { getIcon } from "@utils/get-icon";
-import { useRouter } from "next/router";
-import ValidationError from "@components/ui/form-validation-error";
-import { useEffect } from "react";
-import { Category } from "@ts-types/generated";
-import { useTypesQuery } from "@data/type/use-types.query";
-import { useCategoriesQuery } from "@data/category/use-categories.query";
-import { useUpdateCategoryMutation } from "@data/category/use-category-update.mutation";
-import { useCreateCategoryMutation } from "@data/category/use-category-create.mutation";
-import { categoryIcons } from "./category-icons";
-import { useTranslation } from "next-i18next";
-import FileInput from "@components/ui/file-input";
-import SelectInput from "@components/ui/select-input";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { categoryValidationSchema } from "./category-validation-schema";
+} from 'react-hook-form';
+import Button from '@components/ui/button';
+import TextArea from '@components/ui/text-area';
+import Label from '@components/ui/label';
+import Card from '@components/common/card';
+import Description from '@components/ui/description';
+import * as categoriesIcon from '@components/icons/category';
+import { getIcon } from '@utils/get-icon';
+import { useRouter } from 'next/router';
+import ValidationError from '@components/ui/form-validation-error';
+import { useEffect } from 'react';
+import { Category } from '@ts-types/generated';
+import { useTypesQuery } from '@data/type/use-types.query';
+import { useCategoriesQuery } from '@data/category/use-categories.query';
+import { useUpdateCategoryMutation } from '@data/category/use-category-update.mutation';
+import { useCreateCategoryMutation } from '@data/category/use-category-create.mutation';
+import { categoryIcons } from './category-icons';
+import { useTranslation } from 'next-i18next';
+import FileInput from '@components/ui/file-input';
+import SelectInput from '@components/ui/select-input';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { categoryValidationSchema } from './category-validation-schema';
 
 export const updatedIcons = categoryIcons.map((item: any) => {
   item.label = (
@@ -35,7 +35,7 @@ export const updatedIcons = categoryIcons.map((item: any) => {
         {getIcon({
           iconList: categoriesIcon,
           iconName: item.value,
-          className: "max-h-full max-w-full",
+          className: 'max-h-full max-w-full',
         })}
       </span>
       <span>{item.label}</span>
@@ -55,12 +55,12 @@ function SelectTypes({
   const { data, isLoading } = useTypesQuery();
   return (
     <div className="mb-5">
-      <Label>{t("form:input-label-types")}</Label>
+      <Label>{t('form:input-label-types')}</Label>
       <SelectInput
         name="type"
         control={control}
         getOptionLabel={(option: any) => option.name}
-        getOptionValue={(option: any) => option.slug}
+        getOptionValue={(option: any) => option._id}
         options={data?.types!}
         isLoading={isLoading}
       />
@@ -79,28 +79,28 @@ function SelectCategories({
   const { t } = useTranslation();
   const type = useWatch({
     control,
-    name: "type",
+    name: 'type',
   });
   const { dirtyFields } = useFormState({
     control,
   });
   useEffect(() => {
-    if (type?.slug && dirtyFields?.type) {
-      setValue("parent", []);
+    if (type?._id && dirtyFields?.type) {
+      setValue('parent', []);
     }
   }, [type?.slug]);
   const { data, isLoading: loading } = useCategoriesQuery({
     limit: 999,
-    type: type?.slug,
+    type: type?._id,
   });
   return (
     <div>
-      <Label>{t("form:input-label-parent-category")}</Label>
+      <Label>{t('form:input-label-parent-category')}</Label>
       <SelectInput
         name="parent"
         control={control}
         getOptionLabel={(option: any) => option.name}
-        getOptionValue={(option: any) => option.id}
+        getOptionValue={(option: any) => option._id}
         options={data?.categories?.data!}
         isClearable={true}
         isLoading={loading}
@@ -120,11 +120,11 @@ type FormValues = {
 
 const defaultValues = {
   image: [],
-  name: "",
-  details: "",
-  parent: "",
-  icon: "",
-  type: "",
+  name: '',
+  details: '',
+  parent: '',
+  icon: '',
+  type: '',
 };
 
 type IProps = {
@@ -152,7 +152,7 @@ export default function CreateOrUpdateCategoriesForm({
             ? categoryIcons.find(
                 (singleIcon) => singleIcon.value === initialValues?.icon!
               )
-            : "",
+            : '',
         }
       : defaultValues,
     resolver: yupResolver(categoryValidationSchema),
@@ -167,19 +167,15 @@ export default function CreateOrUpdateCategoriesForm({
     const input = {
       name: values.name,
       details: values.details,
-      image: {
-        thumbnail: values?.image?.thumbnail,
-        original: values?.image?.original,
-        id: values?.image?.id,
-      },
-      icon: values.icon?.value || "",
-      parent: values.parent?.id,
-      type_id: values.type?.id,
+      image: values?.image,
+      icon: values.icon?.value || '',
+      parent: values.parent?._id,
+      type: values.type?._id,
     };
     if (initialValues) {
       updateCategory({
         variables: {
-          id: initialValues?.id,
+          id: initialValues?._id,
           input: {
             ...input,
           },
@@ -198,8 +194,8 @@ export default function CreateOrUpdateCategoriesForm({
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-wrap pb-8 border-b border-dashed border-border-base my-5 sm:my-8">
         <Description
-          title={t("form:input-label-image")}
-          details={t("form:category-image-helper-text")}
+          title={t('form:input-label-image')}
+          details={t('form:category-image-helper-text')}
           className="w-full px-0 sm:pe-4 md:pe-5 pb-5 sm:w-4/12 md:w-1/3 sm:py-8"
         />
 
@@ -210,33 +206,33 @@ export default function CreateOrUpdateCategoriesForm({
 
       <div className="flex flex-wrap my-5 sm:my-8">
         <Description
-          title={t("form:input-label-description")}
+          title={t('form:input-label-description')}
           details={`${
             initialValues
-              ? t("form:item-description-edit")
-              : t("form:item-description-add")
-          } ${t("form:category-description-helper-text")}`}
+              ? t('form:item-description-edit')
+              : t('form:item-description-add')
+          } ${t('form:category-description-helper-text')}`}
           className="w-full px-0 sm:pe-4 md:pe-5 pb-5 sm:w-4/12 md:w-1/3 sm:py-8 "
         />
 
         <Card className="w-full sm:w-8/12 md:w-2/3">
           <Input
-            label={t("form:input-label-name")}
-            {...register("name")}
+            label={t('form:input-label-name')}
+            {...register('name')}
             error={t(errors.name?.message!)}
             variant="outline"
             className="mb-5"
           />
 
           <TextArea
-            label={t("form:input-label-details")}
-            {...register("details")}
+            label={t('form:input-label-details')}
+            {...register('details')}
             variant="outline"
             className="mb-5"
           />
 
           <div className="mb-5">
-            <Label>{t("form:input-label-select-icon")}</Label>
+            <Label>{t('form:input-label-select-icon')}</Label>
             <SelectInput
               name="icon"
               control={control}
@@ -256,14 +252,14 @@ export default function CreateOrUpdateCategoriesForm({
             className="me-4"
             type="button"
           >
-            {t("form:button-label-back")}
+            {t('form:button-label-back')}
           </Button>
         )}
 
         <Button loading={creating || updating}>
           {initialValues
-            ? t("form:button-label-update-category")
-            : t("form:button-label-add-category")}
+            ? t('form:button-label-update-category')
+            : t('form:button-label-add-category')}
         </Button>
       </div>
     </form>

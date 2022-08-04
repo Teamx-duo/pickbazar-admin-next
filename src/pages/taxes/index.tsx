@@ -56,8 +56,8 @@ export default function TaxesPage() {
             }}
             options={[
               { id: 1, value: "name", label: "Name" },
-              { id: 2, value: "created_at", label: "Created At" },
-              { id: 2, value: "updated_at", label: "Updated At" },
+              { id: 2, value: "createdAt", label: "Created At" },
+              { id: 2, value: "updatedAt", label: "Updated At" },
             ]}
           />
 

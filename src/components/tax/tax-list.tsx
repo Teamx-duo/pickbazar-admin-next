@@ -60,7 +60,7 @@ const TaxList = ({ taxes }: IProps) => {
     },
     {
       title: t('table:table-item-actions'),
-      dataIndex: 'id',
+      dataIndex: '_id',
       key: 'actions',
       align: 'center',
       render: (id: string) => (
@@ -80,7 +80,7 @@ const TaxList = ({ taxes }: IProps) => {
         columns={columns}
         emptyText={t('table:empty-table-data')}
         data={taxes?.data}
-        rowKey="id"
+        rowKey="_id"
         scroll={{ x: 900 }}
       />
     </div>

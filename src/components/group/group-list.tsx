@@ -56,7 +56,7 @@ const TypeList = ({ types }: IProps) => {
       align: alignRight,
       render: (id: string, record: Type) => (
         <ActionButtons
-          id={record.id}
+          id={record._id}
           editUrl={`${ROUTES.GROUPS}/${id}/edit`}
           deleteModalView="DELETE_TYPE"
         />

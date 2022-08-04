@@ -17,7 +17,9 @@ const fetchAttributes = async ({ queryKey }: QueryParamsType) => {
     name: text,
     shop_id: shop_id,
   });
-  const url = `${API_ENDPOINTS.ATTRIBUTES}?search=${searchString}&orderBy=${orderBy}&sortedBy=${sortedBy}`;
+  const url = `${API_ENDPOINTS.ATTRIBUTES}?${text ? `search=${text}&` : ''}${
+    shop_id ? `shop=${shop_id}` : ''
+  }&orderBy=${orderBy}&sortedBy=${sortedBy}`;
   const { data, ...rest } = await Attribute.all(url);
   return { attributes: { data: data.docs, paginatorInfo: rest } };
 };

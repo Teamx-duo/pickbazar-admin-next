@@ -19,12 +19,12 @@ const fetchCategories = async ({ queryKey }: QueryParamsType) => {
     orderBy = 'updated_at',
     sortedBy = 'DESC',
   } = params as CategoriesQueryOptionsType;
-
-  const searchString = stringifySearchQuery({
-    name: text,
-    type,
-  });
-  const url = `${API_ENDPOINTS.PARENT_CATEGORIES}?search=${searchString}&searchJoin=and&limit=${limit}&parent=${parent}&page=${page}&orderBy=${orderBy}&sortedBy=${sortedBy}`;
+  
+  const url = `${API_ENDPOINTS.PARENT_CATEGORIES}?${text && `search=${text}&`}${
+    type && `type=${type}?`
+  }&searchJoin=and&limit=${limit}&${
+    parent ? `parent=${parent}` : ''
+  }&page=${page}&orderBy=${orderBy}&sortedBy=${sortedBy}`;
   const {
     data: { docs, ...rest },
   } = await Category.fetchParent(url);

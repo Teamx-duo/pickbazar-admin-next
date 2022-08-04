@@ -62,7 +62,7 @@ const AttributeList = ({ attributes }: IProps) => {
     },
     {
       title: t('table:table-item-actions'),
-      dataIndex: 'id',
+      dataIndex: '_id',
       key: 'actions',
       align: alignRight,
       render: (id: string) => (

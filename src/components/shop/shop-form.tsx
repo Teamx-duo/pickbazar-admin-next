@@ -84,14 +84,8 @@ const ShopForm = ({ initialValues }: { initialValues?: any }) => {
       ? {
           defaultValues: {
             ...initialValues,
-            logo: {
-              thumbnail: initialValues.logo,
-              original: initialValues.logo,
-            },
-            cover_image: {
-              thumbnail: initialValues.cover_image,
-              original: initialValues.cover_image
-            },
+            logo: initialValues.logo,
+            cover_image: initialValues.cover_image,
             settings: {
               ...initialValues?.settings,
               socials: initialValues?.settings?.socials
@@ -129,7 +123,7 @@ const ShopForm = ({ initialValues }: { initialValues?: any }) => {
       const { ...restAddress } = values.address;
       updateShop({
         variables: {
-          id: initialValues.id,
+          id: initialValues._id,
           input: {
             ...values,
             address: restAddress,

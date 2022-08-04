@@ -2,11 +2,9 @@ import Pagination from '@components/ui/pagination';
 import Image from 'next/image';
 import dayjs from 'dayjs';
 import { Table } from '@components/ui/table';
-import { Coupon, CouponPaginator, IPaginator } from '@ts-types/generated';
+import { Coupon, IPaginator } from '@ts-types/generated';
 import ActionButtons from '@components/common/action-buttons';
 import { siteSettings } from '@settings/site.settings';
-import { Attachment } from '@ts-types/generated';
-import usePrice from '@utils/use-price';
 import { ROUTES } from '@utils/routes';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import utc from 'dayjs/plugin/utc';
@@ -99,7 +97,7 @@ const CouponList = ({ coupons, onPagination }: IProps) => {
     },
     {
       title: t('table:table-item-actions'),
-      dataIndex: 'id',
+      dataIndex: '_id',
       key: 'actions',
       align: 'center',
       render: (id: string) => (
