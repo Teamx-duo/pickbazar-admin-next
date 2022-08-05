@@ -29,7 +29,7 @@ export default function AttributePage() {
   const { data: shopData, isLoading: fetchingShop } = useShopQuery(
     shop as string
   );
-  const shopId = shopData?.shop?.id!;
+  const shopId = shopData?.shop?._id!;
   function handleImportModal() {
     openModal("EXPORT_IMPORT_ATTRIBUTE", shopId);
   }
@@ -39,7 +39,7 @@ export default function AttributePage() {
     error,
   } = useAttributesQuery(
     {
-      shop_id: Number(shopId),
+      shop_id: shopId,
       orderBy,
       sortedBy,
     },

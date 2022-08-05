@@ -38,7 +38,7 @@ export type WithdrawsQueryOptionsType = {
 };
 export type ProductsQueryOptionsType = {
   page?: number;
-  shop_id?: number;
+  shop_id?: string;
   text?: string;
   type?: string;
   category?: string;
@@ -56,7 +56,7 @@ export type TypesQueryOptionsType = {
 };
 export type StaffsQueryOptionsType = {
   page?: number;
-  shop_id?: number;
+  shop_id?: string;
   limit?: number;
   orderBy?: string;
   sortedBy?: SortOrder;

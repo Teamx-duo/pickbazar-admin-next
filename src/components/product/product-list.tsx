@@ -8,6 +8,7 @@ import Badge from '@components/ui/badge/badge';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import {
+  IPaginator,
   Product,
   ProductPaginator,
   ProductType,
@@ -16,7 +17,7 @@ import {
 import { useIsRTL } from '@utils/locals';
 
 export type IProps = {
-  products?: ProductPaginator;
+  products?: IPaginator<Product>;
   onPagination: (current: number) => void;
 };
 
@@ -149,7 +150,7 @@ const ProductList = ({ products, onPagination }: IProps) => {
       width: 80,
       render: (slug: string, record: Product) => (
         <ActionButtons
-          id={record?.id}
+          id={record?._id}
           editUrl={`${router.asPath}/${slug}/edit`}
           deleteModalView="DELETE_PRODUCT"
         />

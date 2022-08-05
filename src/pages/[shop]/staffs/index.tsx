@@ -27,14 +27,14 @@ export default function StaffsPage() {
     shop as string
   );
 
-  const shopId = shopData?.shop?.id!;
+  const shopId = shopData?.shop?._id!;
   const {
     data,
     isLoading: loading,
     error,
   } = useStaffsQuery(
     {
-      shop_id: Number(shopId),
+      shop_id: shopId,
       page,
       orderBy,
       sortedBy,

@@ -390,6 +390,7 @@ export declare type AttributeValueInput = {
 };
 export declare type AttributeInput = {
   name: Scalars['String'];
+  shop: Scalars['ID'];
   values: AttributeValueInput;
 };
 export declare type AttributeValueCreateInput = {

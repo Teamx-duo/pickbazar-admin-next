@@ -1,45 +1,45 @@
-import { Table } from "@components/ui/table";
-import ActionButtons from "@components/common/action-buttons";
-import { useTranslation } from "next-i18next";
-import { useIsRTL } from "@utils/locals";
-import Pagination from "@components/ui/pagination";
-import { UserPaginator } from "@ts-types/generated";
+import { Table } from '@components/ui/table';
+import ActionButtons from '@components/common/action-buttons';
+import { useTranslation } from 'next-i18next';
+import { useIsRTL } from '@utils/locals';
+import Pagination from '@components/ui/pagination';
+import { User, UserPaginator } from '@ts-types/generated';
 
 type IProps = {
-  staffs: UserPaginator | null | undefined;
+  staffs: { data: User[] } | null | undefined;
   onPagination: (current: number) => void;
 };
 
 const StaffList = ({ staffs, onPagination }: IProps) => {
   const { t } = useTranslation();
   const { alignLeft, alignRight } = useIsRTL();
-  const { data, paginatorInfo } = staffs!;
+  const { data } = staffs!;
 
   const columns = [
     {
-      title: t("table:table-item-title"),
-      dataIndex: "name",
-      key: "name",
+      title: t('table:table-item-title'),
+      dataIndex: 'name',
+      key: 'name',
       align: alignLeft,
     },
     {
-      title: t("table:table-item-email"),
-      dataIndex: "email",
-      key: "email",
+      title: t('table:table-item-email'),
+      dataIndex: 'email',
+      key: 'email',
       align: alignLeft,
     },
     {
-      title: t("table:table-item-status"),
-      dataIndex: "is_active",
-      key: "is_active",
-      align: "center",
+      title: t('table:table-item-status'),
+      dataIndex: 'is_active',
+      key: 'is_active',
+      align: 'center',
       render: (is_active: boolean) =>
-        is_active ? t("common:text-active") : t("common:text-inactive"),
+        is_active ? t('common:text-active') : t('common:text-inactive'),
     },
     {
-      title: t("table:table-item-actions"),
-      dataIndex: "id",
-      key: "actions",
+      title: t('table:table-item-actions'),
+      dataIndex: 'id',
+      key: 'actions',
       align: alignRight,
       render: (id: string) => {
         return <ActionButtons id={id} deleteModalView="DELETE_STAFF" />;
@@ -53,13 +53,13 @@ const StaffList = ({ staffs, onPagination }: IProps) => {
         <Table
           // @ts-ignore
           columns={columns}
-          emptyText={t("table:empty-table-data")}
+          emptyText={t('table:empty-table-data')}
           data={data!}
           rowKey="id"
           scroll={{ x: 800 }}
         />
       </div>
-      {!!paginatorInfo.total && (
+      {/* {!!paginatorInfo.total && (
         <div className="flex justify-end items-center">
           <Pagination
             total={paginatorInfo.total}
@@ -69,7 +69,7 @@ const StaffList = ({ staffs, onPagination }: IProps) => {
             showLessItems
           />
         </div>
-      )}
+      )} */}
     </>
   );
 };

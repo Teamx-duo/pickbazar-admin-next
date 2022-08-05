@@ -18,9 +18,7 @@ const fetchOrders = async ({ queryKey }: QueryParamsType) => {
   const searchString = stringifySearchQuery({
     tracking_number: text,
   });
-  const url = `${API_ENDPOINTS.ORDERS}?${
-    searchString ? `search=${searchString}` : ''
-  }&${
+  const url = `${API_ENDPOINTS.ORDERS}?${text ? `search=${text}` : ''}&${
     shop_id ? `shop=${shop_id}` : ''
   }&page=${page}&limit=${limit}&orderBy=${orderBy}&sortedBy=${sortedBy}`;
   const {

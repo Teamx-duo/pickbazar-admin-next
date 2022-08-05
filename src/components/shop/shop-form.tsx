@@ -111,7 +111,7 @@ const ShopForm = ({ initialValues }: { initialValues?: any }) => {
   function onSubmit(values: FormValues) {
     const settings = {
       ...values?.settings,
-      location: { ...omit(values?.settings?.location, '__typename') },
+      location: values?.settings?.location,
       socials: values?.settings?.socials
         ? values?.settings?.socials?.map((social: any) => ({
             icon: social?.icon?.value,
@@ -340,13 +340,6 @@ const ShopForm = ({ initialValues }: { initialValues?: any }) => {
                           defaultValue={item?.icon!}
                         />
                       </div>
-                      {/* <Input
-                        className="sm:col-span-2"
-                        label={t("form:input-label-icon")}
-                        variant="outline"
-                        {...register(`settings.socials.${index}.icon` as const)}
-                        defaultValue={item?.icon!} // make sure to set up defaultValue
-                      /> */}
                       <Input
                         className="sm:col-span-2"
                         label={t('form:input-label-url')}

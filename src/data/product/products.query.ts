@@ -18,7 +18,7 @@ const fetchProducts = async ({ queryKey }: QueryParamsType) => {
     shop_id,
     status,
     limit = 15,
-    orderBy = 'updated_at',
+    orderBy = 'updatedAt',
     sortedBy = 'DESC',
   } = params as ProductsQueryOptionsType;
   const searchString = stringifySearchQuery({
@@ -28,7 +28,13 @@ const fetchProducts = async ({ queryKey }: QueryParamsType) => {
     status,
     shop_id,
   });
-  const url = `${API_ENDPOINTS.PRODUCTS}?search=${searchString}&searchJoin=and&limit=${limit}&page=${page}&orderBy=${orderBy}&sortedBy=${sortedBy}`;
+  const url = `${API_ENDPOINTS.PRODUCTS}?${text ? `search=${text}` : ''}${
+    type ? `type=${type}` : ''
+  }${category ? `category=${category}` : ''}${
+    shop_id ? `shop=${shop_id}` : ''
+  }${
+    status ? `status=${status}` : ''
+  }&searchJoin=and&limit=${limit}&page=${page}&orderBy=${orderBy}&sortedBy=${sortedBy}`;
   const {
     data: { docs, ...rest },
   } = await Product.all(url);
