@@ -22,7 +22,6 @@ type IProps = {
 
 function filteredAttributes(attributes: any, variations: any) {
   let res = [];
-  console.log('ATTRIBUTES', attributes);
 
   res = attributes?.filter((el: any) => {
     return !variations.find((element: any) => {

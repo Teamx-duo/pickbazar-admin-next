@@ -16,7 +16,7 @@ export default function AllShopPage() {
   const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
   const [page, setPage] = useState(1);
-  const [orderBy, setOrder] = useState('created_at');
+  const [orderBy, setOrder] = useState('createdAt');
   const [sortedBy, setColumn] = useState<SortOrder>(SortOrder.Desc);
   const {
     data,
@@ -62,8 +62,8 @@ export default function AllShopPage() {
               { id: 1, value: 'name', label: 'Name' },
               { id: 1, value: 'products_count', label: 'Products Count' },
               { id: 1, value: 'orders_count', label: 'Orders Count' },
-              { id: 2, value: 'created_at', label: 'Created At' },
-              { id: 2, value: 'updated_at', label: 'Updated At' },
+              { id: 2, value: 'createdAt', label: 'Created At' },
+              { id: 2, value: 'updatedAt', label: 'Updated At' },
             ]}
           />
         </div>

@@ -1,5 +1,5 @@
-import { QueryKey } from "react-query";
-import { SortOrder } from "./generated";
+import { QueryKey } from 'react-query';
+import { Maybe, SortOrder } from './generated';
 
 export type CategoriesQueryOptionsType = {
   type?: string;
@@ -65,7 +65,7 @@ export type StaffsQueryOptionsType = {
 export type QueryOptionsType = {
   page?: number;
   text?: string;
-  shop_id?: string;
+  shop_id?: Maybe<string>;
   limit?: number;
   orderBy?: string;
   sortedBy?: SortOrder;

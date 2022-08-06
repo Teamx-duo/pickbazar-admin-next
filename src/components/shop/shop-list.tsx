@@ -9,7 +9,7 @@ import Badge from '@components/ui/badge/badge';
 import { IPaginator, Shop, ShopPaginator } from '@ts-types/generated';
 
 type IProps = {
-  shops: IPaginator<Shop>;
+  shops?: IPaginator<Shop>;
   onPagination: (current: number) => void;
 };
 

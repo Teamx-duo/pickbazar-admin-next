@@ -305,7 +305,7 @@ export declare type Attachment = {
   id?: Maybe<Scalars['ID']>;
 };
 export declare type AttributeValue = {
-  id: Scalars['ID'];
+  _id: Scalars['ID'];
   value?: Maybe<Scalars['String']>;
   attribute?: Maybe<Attribute>;
   products: Array<Product>;

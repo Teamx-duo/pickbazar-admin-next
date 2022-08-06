@@ -1,8 +1,8 @@
-import Shop from "@repositories/shop";
-import { useMutation, useQueryClient } from "react-query";
-import { API_ENDPOINTS } from "@utils/api/endpoints";
-import { toast } from "react-toastify";
-import { useTranslation } from "next-i18next";
+import Shop from '@repositories/shop';
+import { useMutation, useQueryClient } from 'react-query';
+import { API_ENDPOINTS } from '@utils/api/endpoints';
+import { toast } from 'react-toastify';
+import { useTranslation } from 'next-i18next';
 export interface IShopApproveVariables {
   variables: {
     id: string;
@@ -14,10 +14,13 @@ export const useDisApproveShopMutation = () => {
   const queryClient = useQueryClient();
   return useMutation(
     ({ variables }: IShopApproveVariables) =>
-      Shop.disapprove(API_ENDPOINTS.DISAPPROVE_SHOP, variables),
+      Shop.disapprove(
+        `${API_ENDPOINTS.SHOPS}/${API_ENDPOINTS.DISAPPROVE_SHOP}`,
+        variables
+      ),
     {
       onSuccess: () => {
-        toast.success(t("common:successfully-updated"));
+        toast.success(t('common:successfully-updated'));
       },
       // Always refetch after error or success:
       onSettled: () => {

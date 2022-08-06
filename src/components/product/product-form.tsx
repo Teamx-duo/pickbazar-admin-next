@@ -28,6 +28,8 @@ import {
   Product,
   VariationOption,
   Tag,
+  AttributeValue,
+  Maybe,
 } from '@ts-types/generated';
 import { useCreateProductMutation } from '@data/product/product-create.mutation';
 import { useTranslation } from 'next-i18next';
@@ -104,12 +106,12 @@ const productType = [
   { name: 'Simple Product', value: ProductType.Simple },
   { name: 'Variable Product', value: ProductType.Variable },
 ];
-function getFormattedVariations(variations: any) {
+function getFormattedVariations(variations?: Maybe<Maybe<AttributeValue>[]>) {
   const variationGroup = groupBy(variations, 'attribute.slug');
   return Object.values(variationGroup)?.map((vg) => {
     return {
       attribute: vg?.[0]?.attribute,
-      value: vg?.map((v) => ({ id: v.id, value: v.value })),
+      value: vg?.map((v) => ({ id: v?._id, value: v?.value })),
     };
   });
 }
@@ -194,6 +196,7 @@ export default function CreateOrUpdateProductForm({ initialValues }: IProps) {
     useUpdateProductMutation();
 
   const onSubmit = async (values: FormValues) => {
+    console.log(values?.variations);
     const { type } = values;
     const inputValues: any = {
       description: values.description,
@@ -223,16 +226,18 @@ export default function CreateOrUpdateProductForm({ initialValues }: IProps) {
       gallery: values.gallery,
       ...(productTypeValue?.value === ProductType.Variable
         ? {
-            variations: values?.variations?.flatMap(({ value }: any) => {
-              return value?.map(({ _id }: any) => _id);
-            }),
+            variations: values?.variations
+              ?.flatMap(({ value }: any) => {
+                return value?.map(({ id }: any) => id);
+              })
+              .filter((val) => val),
           }
         : {}),
       ...(productTypeValue?.value === ProductType.Variable
         ? {
             variation_options: {
-              upsert: values?.variation_options?.map(
-                ({ options, ...rest }: any) => ({
+              upsert: values?.variation_options
+                ?.map(({ options, ...rest }: any) => ({
                   ...rest,
                   options: processOptions(options).map(
                     ({ name, value }: VariationOption) => ({
@@ -240,8 +245,8 @@ export default function CreateOrUpdateProductForm({ initialValues }: IProps) {
                       value,
                     })
                   ),
-                })
-              ),
+                }))
+                .filter((val) => val !== null),
               delete: initialValues?.variation_options
                 ?.map((initialVariationOption) => {
                   const find = values?.variation_options?.find(
@@ -256,13 +261,13 @@ export default function CreateOrUpdateProductForm({ initialValues }: IProps) {
             },
           }
         : {
-            // variations: [],
-            // variation_options: {
-            //   upsert: [],
-            //   delete: initialValues?.variation_options?.map(
-            //     (variation) => variation?.id
-            //   ),
-            // },
+            variations: [],
+            variation_options: {
+              upsert: [],
+              delete: initialValues?.variation_options?.map(
+                (variation) => variation?._id
+              ),
+            },
           }),
       ...(productTypeValue?.value === ProductType.Variable && {
         ...calculateMaxMinPrice(values?.variation_options),
