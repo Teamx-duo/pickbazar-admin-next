@@ -704,8 +704,7 @@ export type SocialInput = {
 };
 
 export type UserProfileInput = {
-  id: Scalars['ID'];
-  avatar?: Maybe<AttachmentInput>;
+  avatar?: Maybe<Scalars['String']>;
   bio?: Maybe<Scalars['String']>;
   socials?: Maybe<Array<Maybe<SocialInput>>>;
   contact?: Maybe<Scalars['String']>;

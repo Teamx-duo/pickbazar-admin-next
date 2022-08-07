@@ -16,7 +16,6 @@ const getPreviewImage = (value: any) => {
 };
 export default function Uploader({ onChange, value, multiple }: any) {
   const { t } = useTranslation();
-  console.log(getPreviewImage(value));
   const [files, setFiles] = useState<Attachment[]>(getPreviewImage(value));
   const { mutate: upload, isLoading: loading } = useUploadMutation();
   const { getRootProps, getInputProps } = useDropzone({

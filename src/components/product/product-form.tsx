@@ -196,7 +196,6 @@ export default function CreateOrUpdateProductForm({ initialValues }: IProps) {
     useUpdateProductMutation();
 
   const onSubmit = async (values: FormValues) => {
-    console.log(values?.variations);
     const { type } = values;
     const inputValues: any = {
       description: values.description,
@@ -226,11 +225,9 @@ export default function CreateOrUpdateProductForm({ initialValues }: IProps) {
       gallery: values.gallery,
       ...(productTypeValue?.value === ProductType.Variable
         ? {
-            variations: values?.variations
-              ?.flatMap(({ value }: any) => {
-                return value?.map(({ id }: any) => id);
-              })
-              .filter((val) => val),
+            variations: values?.variations?.flatMap(({ value }: any) => {
+              return value?.map(({ id, _id }: any) => id ?? _id);
+            }),
           }
         : {}),
       ...(productTypeValue?.value === ProductType.Variable

@@ -6,7 +6,7 @@ import { API_ENDPOINTS } from "@utils/api/endpoints";
 import { useTranslation } from "next-i18next";
 
 export interface IUserUpdateVariables {
-  variables: { id: number; input: UpdateUser };
+  variables: { id: string; input: UpdateUser };
 }
 
 export const useUpdateUserMutation = () => {

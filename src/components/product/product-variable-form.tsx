@@ -11,7 +11,7 @@ import SelectInput from '@components/ui/select-input';
 import { cartesian } from '@utils/cartesian';
 import isEmpty from 'lodash/isEmpty';
 import { useEffect } from 'react';
-import { Product } from '@ts-types/generated';
+import { Attribute, Product } from '@ts-types/generated';
 import { useTranslation } from 'next-i18next';
 import { useAttributesQuery } from '@data/attributes/use-attributes.query';
 
@@ -28,7 +28,7 @@ function filteredAttributes(attributes: any, variations: any) {
       return element?.attribute?._id === el?._id;
     });
   });
-  return attributes;
+  return res;
 }
 
 function getCartesianProduct(values: any) {
@@ -105,10 +105,12 @@ export default function ProductVariableForm({ shopId, initialValues }: IProps) {
                       <Label>{t('form:input-label-attribute-name')}*</Label>
                       <SelectInput
                         name={`variations[${index}].attribute`}
+                        defaultValue={attributes?.data?.find(
+                          (attr) => attr._id === field.attribute
+                        )}
                         control={control}
-                        defaultValue={field.attribute}
-                        getOptionLabel={(option: any) => option.name}
-                        getOptionValue={(option: any) => option._id}
+                        getOptionLabel={(option: Attribute) => option.name}
+                        getOptionValue={(option: Attribute) => option._id}
                         options={
                           filteredAttributes(attributes?.data, variations)!
                         }
@@ -138,7 +140,7 @@ export default function ProductVariableForm({ shopId, initialValues }: IProps) {
 
           <div className="px-5 md:px-8">
             <Button
-              disabled={fields.length === attributes?.length}
+              disabled={fields.length === attributes?.data?.length}
               onClick={(e: any) => {
                 e.preventDefault();
                 append({ attribute: '', value: [] });
