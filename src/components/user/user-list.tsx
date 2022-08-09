@@ -27,7 +27,7 @@ const CustomerList = ({ customers, onPagination }: IProps) => {
       width: 74,
       render: (profile: any, record: any) => (
         <Image
-          src={profile?.avatar?.thumbnail ?? siteSettings.avatar.placeholder}
+          src={profile?.avatar ?? siteSettings.avatar.placeholder}
           alt={record?.name}
           layout="fixed"
           width={42}
