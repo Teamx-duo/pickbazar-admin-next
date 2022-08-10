@@ -21,7 +21,7 @@ export declare type Scalars = {
   DateTimeTz: any;
 };
 export declare type Address = {
-  id: Scalars['ID'];
+  _id: Scalars['ID'];
   title?: Maybe<Scalars['String']>;
   default?: Maybe<Scalars['Boolean']>;
   address?: Maybe<UserAddress>;
@@ -36,21 +36,21 @@ export declare type UserAddress = {
   street_address?: Maybe<Scalars['String']>;
 };
 export declare type User = {
-  id: Scalars['ID'];
+  _id: Scalars['ID'];
   name: Scalars['String'];
   shops: [Shop];
   managed_shop: Shop;
   is_active: Boolean;
   email: Scalars['String'];
-  created_at: Scalars['DateTime'];
-  updated_at: Scalars['DateTime'];
+  createdAt: Scalars['DateTime'];
+  updatedAt: Scalars['DateTime'];
   profile?: Maybe<Profile>;
   address: Array<Address>;
   orders?: Maybe<OrderPaginator>;
 };
 
 export declare type Profile = {
-  id: Scalars['ID'];
+  _id: Scalars['ID'];
   avatar?: Maybe<Attachment>;
   bio?: Maybe<Scalars['String']>;
   contact?: Maybe<Scalars['String']>;
@@ -110,8 +110,8 @@ export declare type Order = {
   delivery_fee?: Maybe<Scalars['Float']>;
   delivery_time: Scalars['String'];
   products: Array<Product>;
-  created_at: Scalars['DateTime'];
-  updated_at: Scalars['DateTime'];
+  createdAt: Scalars['DateTime'];
+  updatedAt: Scalars['DateTime'];
   billing_address?: Maybe<UserAddress>;
   shipping_address?: Maybe<UserAddress>;
 };
@@ -120,8 +120,8 @@ export declare type OrderStatus = {
   name: Scalars['String'];
   color: Scalars['String'];
   serial: Scalars['Int'];
-  created_at: Scalars['DateTime'];
-  updated_at: Scalars['DateTime'];
+  createdAt: Scalars['DateTime'];
+  updatedAt: Scalars['DateTime'];
 };
 export declare type Coupon = {
   _id: Scalars['ID'];
@@ -164,8 +164,8 @@ export declare type Product = {
   price: Scalars['Float'];
   quantity?: Maybe<Scalars['Int']>;
   unit?: Maybe<Scalars['String']>;
-  created_at: Scalars['DateTime'];
-  updated_at: Scalars['DateTime'];
+  createdAt: Scalars['DateTime'];
+  updatedAt: Scalars['DateTime'];
 };
 
 export interface IPaginator<Data> {
@@ -296,13 +296,13 @@ export declare type Category = {
   icon?: Maybe<Scalars['String']>;
   type: Type;
   products: Array<Product>;
-  created_at: Scalars['DateTime'];
-  updated_at: Scalars['DateTime'];
+  createdAt: Scalars['DateTime'];
+  updatedAt: Scalars['DateTime'];
 };
 export declare type Attachment = {
   thumbnail?: Maybe<Scalars['String']>;
   original?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['ID']>;
+  _id?: Maybe<Scalars['ID']>;
 };
 export declare type AttributeValue = {
   _id: Scalars['ID'];
@@ -355,7 +355,7 @@ export declare type OrderStatusPaginator = {
 };
 
 export declare type Settings = {
-  id: Scalars['ID'];
+  _id: Scalars['ID'];
   options: SettingsOptions;
 };
 
@@ -449,7 +449,7 @@ export declare type VerifiedCheckoutData = {
 };
 
 export type Shipping = {
-  id?: Maybe<Scalars['ID']>;
+  _id?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
   amount?: Maybe<Scalars['Float']>;
   is_global?: Maybe<Scalars['Boolean']>;
@@ -584,7 +584,7 @@ export declare type CreateProduct = {
   width?: Maybe<Scalars['String']>;
 };
 export declare type AttributeProductPivot = {
-  id: Scalars['ID'];
+  _id: Scalars['ID'];
   price?: Maybe<Scalars['Float']>;
 };
 export declare type UpdateProduct = {
@@ -804,7 +804,7 @@ export declare type PaymentInfoInput = {
 };
 
 export declare type Balance = {
-  id?: Maybe<Scalars['ID']>;
+  _id?: Maybe<Scalars['ID']>;
   admin_commission_rate?: Maybe<Scalars['Float']>;
   shop?: Maybe<Shop>;
   total_earnings?: Maybe<Scalars['Float']>;
@@ -847,8 +847,8 @@ export declare type Tag = {
   icon?: Maybe<Scalars['String']>;
   type?: Maybe<Type>;
   products?: Maybe<Array<Maybe<Product>>>;
-  created_at?: Maybe<Scalars['DateTime']>;
-  updated_at?: Maybe<Scalars['DateTime']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 /** A paginated list of Tag items. */
 
@@ -880,16 +880,15 @@ export declare type UpdateTagInput = {
 
 export declare type Withdraw = {
   __typename?: 'Withdraw';
-  id?: Maybe<Scalars['ID']>;
+  _id?: Maybe<Scalars['ID']>;
   amount?: Maybe<Scalars['Float']>;
   status?: Maybe<WithdrawStatus>;
-  shop_id?: Maybe<Scalars['Int']>;
   shop?: Maybe<Shop>;
   payment_method?: Maybe<Scalars['String']>;
   details?: Maybe<Scalars['String']>;
   note?: Maybe<Scalars['String']>;
-  created_at?: Maybe<Scalars['DateTime']>;
-  updated_at?: Maybe<Scalars['DateTime']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 /** A paginated list of Withdraw items. */
 
@@ -975,7 +974,7 @@ export declare type ContactDetailsInput = {
 };
 
 export declare type TypeSettingsInput = {
-  _id?: Scalars['String'];
+  id?: Scalars['String'];
   isHome?: Maybe<Scalars['Boolean']>;
   layoutType?: Maybe<Scalars['String']>;
   productCard?: Maybe<Scalars['String']>;

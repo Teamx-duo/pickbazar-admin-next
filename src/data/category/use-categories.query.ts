@@ -24,7 +24,9 @@ const fetchCategories = async ({
 
   const url = `${API_ENDPOINTS.CATEGORIES}?${text ? `search=${text}&` : ''}${
     type ? `type=${type}&` : ''
-  }searchJoin=and&limit=${limit}&page=${page}&orderBy=${orderBy}&sortedBy=${sortedBy}`;
+  }searchJoin=and&limit=${limit}&${
+    page ? `page=${page}` : ''
+  }&orderBy=${orderBy}&sortedBy=${sortedBy}`;
   const {
     data: { docs, ...rest },
   } = await Category.all(url);

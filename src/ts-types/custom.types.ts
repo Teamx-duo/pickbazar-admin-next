@@ -29,7 +29,7 @@ export type ShopsQueryOptionsType = {
 };
 export type WithdrawsQueryOptionsType = {
   text?: string;
-  shop_id?: number;
+  shop_id?: string;
   page?: number;
   parent?: number | null;
   limit?: number;

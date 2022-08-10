@@ -40,7 +40,7 @@ export const API_ENDPOINTS = {
   SHOPS: 'shops',
   MY_SHOPS: 'my-shops',
   WITHDRAWS: 'withdraws',
-  APPROVE_WITHDRAW: 'approve-withdraw',
+  APPROVE_WITHDRAW: 'approve',
   STAFFS: 'staffs',
   ADD_STAFF: 'staffs',
   REMOVE_STAFF: 'staffs',

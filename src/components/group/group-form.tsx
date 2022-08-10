@@ -150,7 +150,9 @@ export default function CreateOrUpdateTypeForm({ initialValues }: IProps) {
         productCard: values?.settings?.productCard,
         layoutType: values?.settings?.layoutType,
       },
-      promotional_sliders: [...values.promotional_sliders],
+      ...(values.promotional_sliders
+        ? { promotional_sliders: [...values.promotional_sliders] }
+        : {}),
       banners: values?.banners?.map((banner) => ({
         ...banner,
         image: banner?.image,

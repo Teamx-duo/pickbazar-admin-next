@@ -1,12 +1,12 @@
-import { Table } from "@components/ui/table";
-import ActionButtons from "@components/common/action-buttons";
-import { ROUTES } from "@utils/routes";
-import { Shipping } from "@ts-types/generated";
-import { useTranslation } from "next-i18next";
-import { useIsRTL } from "@utils/locals";
+import { Table } from '@components/ui/table';
+import ActionButtons from '@components/common/action-buttons';
+import { ROUTES } from '@utils/routes';
+import { Shipping } from '@ts-types/generated';
+import { useTranslation } from 'next-i18next';
+import { useIsRTL } from '@utils/locals';
 
 export type IProps = {
-  shippings: Shipping[] | undefined;
+  shippings?: Shipping[] | undefined;
 };
 const ShippingList = ({ shippings }: IProps) => {
   const { t } = useTranslation();
@@ -14,45 +14,46 @@ const ShippingList = ({ shippings }: IProps) => {
 
   const columns = [
     {
-      title: t("table:table-item-id"),
-      dataIndex: "id",
-      key: "id",
-      align: "center",
-      width: 62,
+      title: t('table:table-item-id'),
+      dataIndex: '_id',
+      key: '_id',
+      ellipsis: true,
+      align: 'center',
+      width: 100,
     },
     {
-      title: t("table:table-item-title"),
-      dataIndex: "name",
-      key: "name",
+      title: t('table:table-item-title'),
+      dataIndex: 'name',
+      key: 'name',
       align: alignLeft,
       width: 150,
     },
     {
-      title: t("table:table-item-amount"),
-      dataIndex: "amount",
-      key: "amount",
-      align: "center",
+      title: t('table:table-item-amount'),
+      dataIndex: 'amount',
+      key: 'amount',
+      align: 'center',
     },
     {
-      title: t("table:table-item-global"),
-      dataIndex: "is_global",
-      key: "is_global",
-      align: "center",
+      title: t('table:table-item-global'),
+      dataIndex: 'is_global',
+      key: 'is_global',
+      align: 'center',
       render: (value: boolean) => (
         <span className="capitalize">{value.toString()}</span>
       ),
     },
     {
-      title: t("table:table-shipping-type"),
-      dataIndex: "type",
-      key: "type",
-      align: "center",
+      title: t('table:table-shipping-type'),
+      dataIndex: 'type',
+      key: 'type',
+      align: 'center',
     },
     {
-      title: t("table:table-item-actions"),
-      dataIndex: "id",
-      key: "actions",
-      align: "center",
+      title: t('table:table-item-actions'),
+      dataIndex: '_id',
+      key: 'actions',
+      align: 'center',
       render: (id: string) => (
         <ActionButtons
           id={id}
@@ -69,7 +70,7 @@ const ShippingList = ({ shippings }: IProps) => {
       <Table
         //@ts-ignore
         columns={columns}
-        emptyText={t("table:empty-table-data")}
+        emptyText={t('table:empty-table-data')}
         data={shippings}
         rowKey="id"
         scroll={{ x: 900 }}
