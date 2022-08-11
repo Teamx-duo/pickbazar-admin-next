@@ -1,9 +1,10 @@
-import { OrderStatusInput } from "@ts-types/generated";
-import { ROUTES } from "@utils/routes";
-import OrderStatus from "@repositories/order-status";
-import { useRouter } from "next/router";
-import { useMutation, useQueryClient } from "react-query";
-import { API_ENDPOINTS } from "@utils/api/endpoints";
+import { OrderStatusInput } from '@ts-types/generated';
+import { ROUTES } from '@utils/routes';
+import OrderStatus from '@repositories/order-status';
+import { useRouter } from 'next/router';
+import { useMutation, useQueryClient } from 'react-query';
+import { API_ENDPOINTS } from '@utils/api/endpoints';
+import { toast } from 'react-toastify';
 
 export interface IOrderStatusCreateVariables {
   variables: {
@@ -21,6 +22,9 @@ export const useCreateOrderStatusMutation = () => {
     {
       onSuccess: () => {
         router.push(ROUTES.ORDER_STATUS);
+      },
+      onError: (error: any) => {
+        toast.error(error?.response?.data?.message);
       },
       // Always refetch after error or success:
       onSettled: () => {

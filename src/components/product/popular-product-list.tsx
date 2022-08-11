@@ -6,7 +6,7 @@ import { useTranslation } from "next-i18next";
 import { useIsRTL } from "@utils/locals";
 
 export type IProps = {
-  products: Product[] | null | undefined;
+  products?: Product[] | null | undefined;
   title?: string;
 };
 

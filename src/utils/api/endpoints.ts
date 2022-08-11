@@ -20,6 +20,7 @@ export const API_ENDPOINTS = {
   SHIPPINGS: 'shippings',
   SETTINGS: 'settings',
   CATEGORIES: 'categories',
+  ALL_CATEGORIES: 'categories/all',
   TAGS: 'tags',
   // PARENT_CATEGORIES: "fetch-parent-category",
   PARENT_CATEGORIES: 'categories',

@@ -1,20 +1,50 @@
-import { CartIconBig } from "@components/icons/cart-icon-bag";
-import { CoinIcon } from "@components/icons/coin-icon";
-import ColumnChart from "@components/widgets/column-chart";
-import StickerCard from "@components/widgets/sticker-card";
-import ErrorMessage from "@components/ui/error-message";
-import usePrice from "@utils/use-price";
-import Loader from "@components/ui/loader/loader";
-import RecentOrders from "@components/order/recent-orders";
-import PopularProductList from "@components/product/popular-product-list";
-import { useOrdersQuery } from "@data/order/use-orders.query";
-import { usePopularProductsQuery } from "@data/analytics/use-popular-products.query";
-import { useAnalyticsQuery } from "@data/analytics/use-analytics.query";
-import { useTranslation } from "next-i18next";
-import { useWithdrawsQuery } from "@data/withdraw/use-withdraws.query";
-import WithdrawTable from "@components/withdraw/withdraw-table";
-import { ShopIcon } from "@components/icons/sidebar";
-import { DollarIcon } from "@components/icons/shops/dollar";
+import { CartIconBig } from '@components/icons/cart-icon-bag';
+import { CoinIcon } from '@components/icons/coin-icon';
+import ColumnChart from '@components/widgets/column-chart';
+import StickerCard from '@components/widgets/sticker-card';
+import ErrorMessage from '@components/ui/error-message';
+import usePrice from '@utils/use-price';
+import Loader from '@components/ui/loader/loader';
+import RecentOrders from '@components/order/recent-orders';
+import PopularProductList from '@components/product/popular-product-list';
+import { useOrdersQuery } from '@data/order/use-orders.query';
+import { usePopularProductsQuery } from '@data/analytics/use-popular-products.query';
+import { useAnalyticsQuery } from '@data/analytics/use-analytics.query';
+import { useTranslation } from 'next-i18next';
+import { useWithdrawsQuery } from '@data/withdraw/use-withdraws.query';
+import WithdrawTable from '@components/withdraw/withdraw-table';
+import { ShopIcon } from '@components/icons/sidebar';
+import { DollarIcon } from '@components/icons/shops/dollar';
+
+const monthsArray = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
+
+const salesByMonthBaseObj = [
+  { month: 'January', total: 0 },
+  { month: 'February', total: 0 },
+  { month: 'March', total: 0 },
+  { month: 'April', total: 0 },
+  { month: 'May', total: 0 },
+  { month: 'June', total: 0 },
+  { month: 'July', total: 0 },
+  { month: 'August', total: 0 },
+  { month: 'September', total: 0 },
+  { month: 'October', total: 0 },
+  { month: 'November', total: 0 },
+  { month: 'December', total: 0 },
+];
 
 export default function Dashboard() {
   const { t } = useTranslation();
@@ -49,7 +79,7 @@ export default function Dashboard() {
   );
 
   if (loading || orderLoading || popularProductLoading || withdrawLoading) {
-    return <Loader text={t("common:text-loading")} />;
+    return <Loader text={t('common:text-loading')} />;
   }
   if (orderError || popularProductError) {
     return (
@@ -60,9 +90,15 @@ export default function Dashboard() {
   }
   let salesByYear: number[] = Array.from({ length: 12 }, (_) => 0);
   if (!!data?.totalYearSaleByMonth?.length) {
-    salesByYear = data.totalYearSaleByMonth.map((item: any) =>
-      item.total.toFixed(2)
-    );
+    salesByYear = monthsArray.map((month: string) => {
+      const dbData = data?.totalYearSaleByMonth?.find(
+        (data) => data?.month === month
+      );
+      if (dbData) {
+        return dbData.total ? dbData.total : 0;
+      }
+      return 0;
+    });
   }
   return (
     <>
@@ -72,7 +108,7 @@ export default function Dashboard() {
             titleTransKey="sticker-card-title-rev"
             subtitleTransKey="sticker-card-subtitle-rev"
             icon={<DollarIcon className="w-7 h-7" color="#047857" />}
-            iconBgStyle={{ backgroundColor: "#A7F3D0" }}
+            iconBgStyle={{ backgroundColor: '#A7F3D0' }}
             price={total_revenue}
           />
         </div>
@@ -95,7 +131,7 @@ export default function Dashboard() {
           <StickerCard
             titleTransKey="sticker-card-title-total-shops"
             icon={<ShopIcon className="w-6" color="#1D4ED8" />}
-            iconBgStyle={{ backgroundColor: "#93C5FD" }}
+            iconBgStyle={{ backgroundColor: '#93C5FD' }}
             price={data?.totalShops}
           />
         </div>
@@ -104,21 +140,21 @@ export default function Dashboard() {
       <div className="w-full flex flex-wrap mb-6">
         <ColumnChart
           widgetTitle="Sale History"
-          colors={["#03D3B5"]}
+          colors={['#03D3B5']}
           series={salesByYear}
           categories={[
-            t("common:january"),
-            t("common:february"),
-            t("common:march"),
-            t("common:april"),
-            t("common:may"),
-            t("common:june"),
-            t("common:july"),
-            t("common:august"),
-            t("common:september"),
-            t("common:october"),
-            t("common:november"),
-            t("common:december"),
+            t('common:january'),
+            t('common:february'),
+            t('common:march'),
+            t('common:april'),
+            t('common:may'),
+            t('common:june'),
+            t('common:july'),
+            t('common:august'),
+            t('common:september'),
+            t('common:october'),
+            t('common:november'),
+            t('common:december'),
           ]}
         />
       </div>
@@ -127,7 +163,7 @@ export default function Dashboard() {
         <div className="w-full sm:w-1/2 xl:w-1/2 sm:px-3 sm:pl-0 mb-6 xl:mb-0">
           <RecentOrders
             orders={orderData?.orders?.data}
-            title={t("table:recent-order-table-title")}
+            title={t('table:recent-order-table-title')}
           />
         </div>
 
@@ -135,14 +171,14 @@ export default function Dashboard() {
           <WithdrawTable
             //@ts-ignore
             withdraws={withdrawsData?.withdraws}
-            title={t("table:withdraw-table-title")}
+            title={t('table:withdraw-table-title')}
           />
         </div>
       </div>
       <div className="w-full sm:pe-0 mb-6 xl:mb-0">
         <PopularProductList
-          products={popularProductData.docs}
-          title={t("table:popular-products-table-title")}
+          products={popularProductData?.data}
+          title={t('table:popular-products-table-title')}
         />
       </div>
     </>

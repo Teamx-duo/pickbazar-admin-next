@@ -54,10 +54,10 @@ const WithdrawTable = ({ withdraws, title }: IProps) => {
       key: "amount",
       align: "right",
       render: (amount: number) => {
-        const { price } = usePrice({
-          amount: amount as number,
-        });
-        return <div>{price}</div>;
+        // const { price } = usePrice({
+        //   amount: amount as number,
+        // });
+        return <div>{amount}</div>;
       },
     },
     {
@@ -69,8 +69,8 @@ const WithdrawTable = ({ withdraws, title }: IProps) => {
     },
     {
       title: t("table:table-item-created-at"),
-      dataIndex: "created_at",
-      key: "created_at",
+      dataIndex: "createdAt",
+      key: "createdAt",
       align: "center",
       render: (date: string) => {
         dayjs.extend(relativeTime);
@@ -85,7 +85,7 @@ const WithdrawTable = ({ withdraws, title }: IProps) => {
     },
     {
       title: t("table:table-item-actions"),
-      dataIndex: "id",
+      dataIndex: "_id",
       key: "actions",
       align: "center",
       render: (id: string) => {

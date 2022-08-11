@@ -4,6 +4,7 @@ import { Control, useFormState, useWatch } from 'react-hook-form';
 import { useEffect } from 'react';
 import { useCategoriesQuery } from '@data/category/use-categories.query';
 import { useTranslation } from 'next-i18next';
+import { useCategoriesAllQuery } from '@data/category/use-categories-all.query';
 
 interface Props {
   control: Control<any>;
@@ -25,7 +26,7 @@ const ProductCategoryInput = ({ control, setValue }: Props) => {
     }
   }, [type?._id]);
 
-  const { data, isLoading: loading } = useCategoriesQuery({
+  const { data, isLoading: loading } = useCategoriesAllQuery({
     limit: 999,
     page: 1,
     type: type._id,

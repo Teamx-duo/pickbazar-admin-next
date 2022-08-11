@@ -27,6 +27,7 @@ import FileInput from '@components/ui/file-input';
 import SelectInput from '@components/ui/select-input';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { categoryValidationSchema } from './category-validation-schema';
+import { useCategoriesAllQuery } from '@data/category/use-categories-all.query';
 
 export const updatedIcons = categoryIcons.map((item: any) => {
   item.label = (
@@ -89,7 +90,7 @@ function SelectCategories({
       setValue('parent', []);
     }
   }, [type?.slug]);
-  const { data, isLoading: loading } = useCategoriesQuery({
+  const { data, isLoading: loading } = useCategoriesAllQuery({
     limit: 999,
     type: type?._id,
   });

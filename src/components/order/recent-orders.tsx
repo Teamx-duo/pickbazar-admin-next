@@ -8,7 +8,7 @@ import { Order, OrderStatus } from '@ts-types/generated';
 import { useTranslation } from 'next-i18next';
 
 type IProps = {
-  orders: Order[];
+  orders?: Order[];
   title?: string;
 };
 
