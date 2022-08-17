@@ -31,21 +31,6 @@ const monthsArray = [
   'December',
 ];
 
-const salesByMonthBaseObj = [
-  { month: 'January', total: 0 },
-  { month: 'February', total: 0 },
-  { month: 'March', total: 0 },
-  { month: 'April', total: 0 },
-  { month: 'May', total: 0 },
-  { month: 'June', total: 0 },
-  { month: 'July', total: 0 },
-  { month: 'August', total: 0 },
-  { month: 'September', total: 0 },
-  { month: 'October', total: 0 },
-  { month: 'November', total: 0 },
-  { month: 'December', total: 0 },
-];
-
 export default function Dashboard() {
   const { t } = useTranslation();
   const { data, isLoading: loading } = useAnalyticsQuery();
@@ -67,6 +52,7 @@ export default function Dashboard() {
   } = useOrdersQuery({
     limit: 10,
     page: 1,
+    orderBy: 'createdAt',
   });
   const {
     data: popularProductData,
@@ -175,12 +161,12 @@ export default function Dashboard() {
           />
         </div>
       </div>
-      <div className="w-full sm:pe-0 mb-6 xl:mb-0">
+      {/* <div className="w-full sm:pe-0 mb-6 xl:mb-0">
         <PopularProductList
           products={popularProductData?.data}
           title={t('table:popular-products-table-title')}
         />
-      </div>
+      </div> */}
     </>
   );
 }

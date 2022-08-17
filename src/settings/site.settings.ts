@@ -92,6 +92,16 @@ export const siteSettings = {
         icon: 'CouponsIcon',
       },
       {
+        href: ROUTES.QUESTIONS,
+        label: 'sidebar-nav-item-questions',
+        icon: 'QuestionsIcon',
+      },
+      {
+        href: ROUTES.REVIEWS,
+        label: 'sidebar-nav-item-reviews',
+        icon: 'ReviewsIcon',
+      },
+      {
         href: ROUTES.TAXES,
         label: 'sidebar-nav-item-taxes',
         icon: 'TaxesIcon',

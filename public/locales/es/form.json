@@ -187,6 +187,7 @@
   "input-label-payment-method": "Método de pago",
   "input-label-vendor-id": "ID de proveedor",
   "input-label-note": "Nota",
+  "input-label-answer": "Answer",
   "form-title-create-tag": "Crear etiqueta",
   "tag-image-helper-text": "Cargar la imagen de su etiqueta aquí",
   "tag-description-helper-text": "los detalles de su etiqueta y la información necesaria desde aquí",

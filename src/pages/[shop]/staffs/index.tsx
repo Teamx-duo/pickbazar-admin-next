@@ -20,7 +20,7 @@ export default function StaffsPage() {
   } = useRouter();
   const { t } = useTranslation();
   const [page, setPage] = useState(1);
-  const [orderBy, setOrder] = useState("created_at");
+  const [orderBy, setOrder] = useState("createdAt");
   const [sortedBy, setColumn] = useState<SortOrder>(SortOrder.Desc);
 
   const { data: shopData, isLoading: fetchingShopId } = useShopQuery(
@@ -74,8 +74,8 @@ export default function StaffsPage() {
             }}
             options={[
               { value: "name", label: "Name" },
-              { value: "created_at", label: "Created At" },
-              { value: "updated_at", label: "Updated At" },
+              { value: "createdAt", label: "Created At" },
+              { value: "updatedat", label: "Updated At" },
             ]}
           />
 

@@ -29,10 +29,10 @@ export default function ProductsPage() {
     setVisible((v) => !v);
   };
 
-  const {
-    data,
-    isLoading: loading,
-    error,
+    const {
+      data,
+      isLoading: loading,
+      error,
   } = useProductsQuery({
     limit: 20,
     page,

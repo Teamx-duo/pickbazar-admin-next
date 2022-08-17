@@ -21,7 +21,7 @@ export default function Orders() {
     query: { shop },
   } = useRouter();
   const { t } = useTranslation();
-  const [orderBy, setOrder] = useState('created_at');
+  const [orderBy, setOrder] = useState('createdAt');
   const [sortedBy, setColumn] = useState<SortOrder>(SortOrder.Desc);
   const { data: shopData, isLoading: fetchingShop } = useShopQuery(
     shop as string
@@ -80,8 +80,8 @@ export default function Orders() {
             }}
             options={[
               { value: 'total', label: 'Total' },
-              { value: 'created_at', label: 'Created At' },
-              { value: 'updated_at', label: 'Updated At' },
+              { value: 'createdAt', label: 'Created At' },
+              { value: 'updatedAt', label: 'Updated At' },
             ]}
           />
         </div>

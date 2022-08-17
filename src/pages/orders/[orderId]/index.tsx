@@ -1,5 +1,4 @@
 import Card from '@components/common/card';
-import Layout from '@components/layouts/admin';
 import Image from 'next/image';
 import { Table } from '@components/ui/table';
 import ProgressBox from '@components/ui/progress-box/progress-box';
@@ -12,14 +11,21 @@ import usePrice from '@utils/use-price';
 import { formatAddress } from '@utils/format-address';
 import Loader from '@components/ui/loader/loader';
 import ValidationError from '@components/ui/form-validation-error';
-import { Attachment } from '@ts-types/generated';
-import { useOrderQuery } from '@data/order/use-order.query';
-import { useUpdateOrderMutation } from '@data/order/use-order-update.mutation';
-import { useOrderStatusesQuery } from '@data/order-status/use-order-statuses.query';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import SelectInput from '@components/ui/select-input';
+import ShopLayout from '@components/layouts/shop';
 import { useIsRTL } from '@utils/locals';
+import { adminOwnerAndStaffOnly } from '@utils/auth-utils';
+import { useUpdateOrderMutation } from '@data/order/use-order-update.mutation';
+import { useOrderStatusesQuery } from '@data/order-status/use-order-statuses.query';
+import { useOrderQuery } from '@data/order/use-order.query';
+import {
+  Attachment,
+  Order,
+  OrderProductPivot,
+  Product,
+} from '@ts-types/generated';
 
 type FormValues = {
   order_status: any;
@@ -28,9 +34,11 @@ export default function OrderDetailsPage() {
   const { t } = useTranslation();
   const { query } = useRouter();
   const { alignLeft, alignRight } = useIsRTL();
-
   const { mutate: updateOrder, isLoading: updating } = useUpdateOrderMutation();
-  const { data: orderStatusData } = useOrderStatusesQuery({});
+  const { data: orderStatusData } = useOrderStatusesQuery({
+    limit: 100,
+  });
+
   const {
     data,
     isLoading: loading,
@@ -43,7 +51,7 @@ export default function OrderDetailsPage() {
 
     formState: { errors },
   } = useForm<FormValues>({
-    defaultValues: { order_status: data?.order?.status?._id ?? '' },
+    defaultValues: { order_status: data?.order?.status ?? '' },
   });
 
   const ChangeStatus = ({ order_status }: FormValues) => {
@@ -86,12 +94,12 @@ export default function OrderDetailsPage() {
 
   const columns = [
     {
-      dataIndex: 'image',
-      key: 'image',
+      dataIndex: 'product_id',
+      key: 'product_id',
       width: 70,
-      render: (image: Attachment) => (
+      render: (product: Product) => (
         <Image
-          src={image?.thumbnail ?? siteSettings.product.placeholder}
+          src={product?.image ?? siteSettings.product.placeholder}
           alt="alt text"
           layout="fixed"
           width={50}
@@ -101,29 +109,29 @@ export default function OrderDetailsPage() {
     },
     {
       title: t('table:table-item-products'),
-      dataIndex: 'name',
-      key: 'name',
+      dataIndex: 'product_id',
+      key: 'product_id',
       align: alignLeft,
-      render: (name: string, item: any) => (
+      render: (product: Product, pivot: OrderProductPivot) => (
         <div>
-          <span>{name}</span>
+          <span>{product?.name}</span>
           <span className="mx-2">x</span>
           <span className="font-semibold text-heading">
-            {item.pivot.order_quantity}
+            {pivot?.order_quantity}
           </span>
         </div>
       ),
     },
     {
       title: t('table:table-item-total'),
-      dataIndex: 'price',
-      key: 'price',
+      dataIndex: 'subtotal',
+      key: 'subtotal',
       align: alignRight,
-      render: (_: any, item: any) => {
-        const { price } = usePrice({
-          amount: parseFloat(item.pivot.subtotal),
-        });
-        return <span>{price}</span>;
+      render: (subtotal: any) => {
+        // const { price } = usePrice({
+        //   amount: Number(subtotal),
+        // });
+        return <span>{subtotal}</span>;
       },
     },
   ];
@@ -132,7 +140,7 @@ export default function OrderDetailsPage() {
     <Card>
       <div className="flex flex-col lg:flex-row items-center">
         <h3 className="text-2xl font-semibold text-heading text-center lg:text-start w-full lg:w-1/3 mb-8 lg:mb-0 whitespace-nowrap">
-          {t('form:input-label-order-id')} - {data?.order?.tracking_number}
+          {t('form:input-label-order-id')} - {data?.order?._id}
         </h3>
 
         <form
@@ -145,17 +153,14 @@ export default function OrderDetailsPage() {
               control={control}
               getOptionLabel={(option: any) => option.name}
               getOptionValue={(option: any) => option._id}
-              options={
-                orderStatusData?.order_statuses?.data
-                  ? orderStatusData?.order_statuses?.data
-                  : []
-              }
+              options={orderStatusData?.order_statuses?.data!}
               placeholder={t('form:input-placeholder-order-status')}
+              rules={{
+                required: 'Status is required',
+              }}
             />
 
-            <ValidationError
-              message={t(errors?.order_status?.message.toString())}
-            />
+            <ValidationError message={t(errors?.order_status?.message)} />
           </div>
           <Button loading={updating}>
             <span className="hidden sm:block">
@@ -181,6 +186,7 @@ export default function OrderDetailsPage() {
             //@ts-ignore
             columns={columns}
             emptyText={t('table:empty-table-data')}
+            //@ts-ignore
             data={data?.order?.products!}
             rowKey="id"
             scroll={{ x: 300 }}
@@ -206,7 +212,7 @@ export default function OrderDetailsPage() {
             <span>{t('common:order-discount')}</span>
             <span>{discount}</span>
           </div>
-          <div className="flex items-center justify-between text-base text-heading font-semibold">
+          <div className="flex items-center justify-between text-body font-semibold">
             <span>{t('common:order-total')}</span>
             <span>{total}</span>
           </div>
@@ -249,7 +255,10 @@ export default function OrderDetailsPage() {
     </Card>
   );
 }
-OrderDetailsPage.Layout = Layout;
+OrderDetailsPage.authenticate = {
+  permissions: adminOwnerAndStaffOnly,
+};
+OrderDetailsPage.Layout = ShopLayout;
 
 export const getServerSideProps = async ({ locale }: any) => ({
   props: {

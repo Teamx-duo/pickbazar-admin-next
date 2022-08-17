@@ -36,6 +36,24 @@ export type WithdrawsQueryOptionsType = {
   orderBy?: string;
   sortedBy?: SortOrder;
 };
+export type QuestionsQueryOptionsType = {
+  shop_id?: string;
+  user?: string;
+  product?: string;
+  page?: number;
+  limit?: number;
+  orderBy?: string;
+  sortedBy?: SortOrder;
+};
+export type ReviewsQueryOptionsType = {
+  shop_id?: string;
+  user?: string;
+  product?: string;
+  page?: number;
+  limit?: number;
+  orderBy?: string;
+  sortedBy?: SortOrder;
+};
 export type ProductsQueryOptionsType = {
   page?: number;
   shop_id?: string;

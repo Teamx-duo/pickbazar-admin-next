@@ -156,7 +156,7 @@ export declare type Product = {
   sale_price?: Maybe<Scalars['Float']>;
   sku?: Maybe<Scalars['String']>;
   gallery?: Maybe<Array<Maybe<Attachment>>>;
-  image?: Maybe<Attachment>;
+  image?: Maybe<Scalars['String']>;
   status?: Maybe<ProductStatus>;
   height?: Maybe<Scalars['String']>;
   length?: Maybe<Scalars['String']>;
@@ -753,6 +753,10 @@ export declare type ApproveWithdrawInput = {
   id: Scalars['ID'];
   status: WithdrawStatus;
 };
+export declare type AnswerQuestionInput = {
+  id: Scalars['ID'];
+  answer: Scalars['String'];
+};
 
 export declare enum WithdrawStatus {
   /** Approved */
@@ -890,6 +894,76 @@ export declare type Withdraw = {
   createdAt?: Maybe<Scalars['DateTime']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
+
+export interface Review {
+  _id?: string;
+  user?: User;
+  shop?: Shop;
+  product?: Product;
+  comment?: string;
+  positive_feedbacks_count?: number;
+  rating?: number;
+  negative_feedbacks_count?: number;
+  abusive_reports_count?: number;
+  createdAt?: string;
+  updatedAt?: string;
+  __v?: number;
+}
+
+/** A paginated list of Review items. */
+
+export declare type ReviewPaginator = {
+  __typename?: 'ReviewPaginator';
+  /** Pagination information about the list of items. */
+
+  paginatorInfo: PaginatorInfo;
+  /** A list of Review items. */
+
+  data: Array<Review>;
+};
+
+export declare type CreateReviewInput = {
+  user?: Scalars['String'];
+  shop?: Scalars['String'];
+  product?: Scalars['String'];
+  comment?: Scalars['String'];
+  rating?: Scalars['Int'];
+};
+
+export interface Question {
+  _id?: string;
+  user?: User;
+  shop?: Shop;
+  product?: Product;
+  question?: string;
+  answer?: string;
+  positive_feedbacks_count?: number;
+  negative_feedbacks_count?: number;
+  abusive_reports_count?: number;
+  createdAt?: string;
+  updatedAt?: string;
+  __v?: number;
+}
+
+/** A paginated list of Question items. */
+
+export declare type QuestionPaginator = {
+  __typename?: 'QuestionPaginator';
+  /** Pagination information about the list of items. */
+
+  paginatorInfo: PaginatorInfo;
+  /** A list of Question items. */
+
+  data: Array<Question>;
+};
+
+export declare type CreateQuestionInput = {
+  user: Scalars['String'];
+  shop: Scalars['String'];
+  product: Scalars['String'];
+  question: Scalars['String'];
+};
+
 /** A paginated list of Withdraw items. */
 
 export declare type WithdrawPaginator = {
@@ -914,7 +988,7 @@ export declare type AddStaffInput = {
   email: Scalars['String'];
   password: Scalars['String'];
   name: Scalars['String'];
-  shop_id: Scalars['Int'];
+  shop: Scalars['String'];
 };
 
 export declare type ShopSettings = {

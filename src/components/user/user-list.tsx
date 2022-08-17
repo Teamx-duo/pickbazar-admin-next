@@ -57,19 +57,13 @@ const CustomerList = ({ customers, onPagination }: IProps) => {
     },
     {
       title: t('table:table-item-actions'),
-      dataIndex: 'id',
+      dataIndex: '_id',
       key: 'actions',
       align: 'center',
       render: (id: string, { is_active }: any) => {
         return (
           <>
-            {me?.id != id && (
-              <ActionButtons
-                id={id}
-                userStatus={true}
-                isUserActive={is_active}
-              />
-            )}
+            <ActionButtons id={id} userStatus={true} isUserActive={is_active} />
           </>
         );
       },
