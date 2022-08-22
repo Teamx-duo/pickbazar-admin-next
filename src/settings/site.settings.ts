@@ -136,6 +136,18 @@ export const siteSettings = {
         permissions: adminOwnerAndStaffOnly,
       },
       {
+        href: (shop: string) => `/${shop}${ROUTES.QUESTIONS}`,
+        label: 'sidebar-nav-item-questions',
+        icon: 'QuestionsIcon',
+        permissions: adminOwnerAndStaffOnly,
+      },
+      {
+        href: (shop: string) => `/${shop}${ROUTES.REVIEWS}`,
+        label: 'sidebar-nav-item-reviews',
+        icon: 'ReviewsIcon',
+        permissions: adminOwnerAndStaffOnly,
+      },
+      {
         href: (shop: string) => `/${shop}${ROUTES.PRODUCTS}`,
         label: 'sidebar-nav-item-products',
         icon: 'ProductsIcon',

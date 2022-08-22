@@ -4,6 +4,7 @@ import Type from "@repositories/type";
 import { useRouter } from "next/router";
 import { useMutation, useQueryClient } from "react-query";
 import { API_ENDPOINTS } from "@utils/api/endpoints";
+import { toast } from "react-toastify";
 
 export interface ITypeCreateVariables {
   variables: {
@@ -25,6 +26,13 @@ export const useCreateTypeMutation = () => {
       // Always refetch after error or success:
       onSettled: () => {
         queryClient.invalidateQueries(API_ENDPOINTS.TYPES);
+      },
+      onError: (error: any) => {
+        toast.error(
+          typeof error?.response?.data?.message === 'string'
+            ? error?.response?.data?.message
+            : error?.response?.data?.message?.[0]
+        );
       },
     }
   );

@@ -16,7 +16,7 @@ import SortForm from '@components/common/sort-form';
 
 export default function TypesPage() {
   const { t } = useTranslation();
-  const [orderBy, setOrder] = useState('created_at');
+  const [orderBy, setOrder] = useState('createdAt');
   const [sortedBy, setColumn] = useState<SortOrder>(SortOrder.Desc);
   const [searchTerm, setSearchTerm] = useState('');
   const {

@@ -9,6 +9,6 @@ export interface IResetPassword {
 
 export const useResetPasswordMutation = () => {
   return useMutation(({ variables: { input } }: IResetPassword) =>
-    User.forgetPassword(API_ENDPOINTS.FORGET_PASSWORD, input)
+    User.forgetPassword(API_ENDPOINTS.RESET_PASSWORD, input)
   );
 };

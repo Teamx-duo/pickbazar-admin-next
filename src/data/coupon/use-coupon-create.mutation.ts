@@ -4,6 +4,7 @@ import Coupon from "@repositories/coupon";
 import { useRouter } from "next/router";
 import { useMutation, useQueryClient } from "react-query";
 import { API_ENDPOINTS } from "@utils/api/endpoints";
+import { toast } from "react-toastify";
 
 export interface ICouponCreateVariables {
   variables: { input: CouponInput };
@@ -23,6 +24,13 @@ export const useCreateCouponMutation = () => {
       // Always refetch after error or success:
       onSettled: () => {
         queryClient.invalidateQueries(API_ENDPOINTS.COUPONS);
+      },
+      onError: (error: any) => {
+        toast.error(
+          typeof error?.response?.data?.message === 'string'
+            ? error?.response?.data?.message
+            : error?.response?.data?.message?.[0]
+        );
       },
     }
   );

@@ -24,7 +24,11 @@ export const useCreateOrderStatusMutation = () => {
         router.push(ROUTES.ORDER_STATUS);
       },
       onError: (error: any) => {
-        toast.error(error?.response?.data?.message);
+        toast.error(
+          typeof error?.response?.data?.message === 'string'
+            ? error?.response?.data?.message
+            : error?.response?.data?.message?.[0]
+        );
       },
       // Always refetch after error or success:
       onSettled: () => {

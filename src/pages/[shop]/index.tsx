@@ -30,7 +30,7 @@ import { PercentageIcon } from '@components/icons/shops/percentage';
 import { DollarIcon } from '@components/icons/shops/dollar';
 import ReadMore from '@components/ui/truncate';
 
-export default function ShopPage() {
+export default function WithdrawsPage() {
   const { t } = useTranslation();
   const { permissions } = getAuthCredentials();
   const {
@@ -60,7 +60,7 @@ export default function ShopPage() {
     orders_count,
     balance,
     address,
-    created_at,
+    createdAt,
     settings,
     slug,
   } = data?.shop! ?? {};
@@ -152,7 +152,8 @@ export default function ShopPage() {
             className="absolute top-3 end-3 bg-blue-500 hover:bg-blue-600 shadow-sm"
             href={`/${shop}/edit`}
           >
-            <EditIcon className="w-4 me-2" /> {t('common:text-edit-shop')}
+            <EditIcon className="w-4 me-2" />
+            <span> {t('common:text-edit-shop')}</span>
           </LinkButton>
         )}
       </div>
@@ -268,7 +269,7 @@ export default function ShopPage() {
             {t('common:text-registered-since')}
           </span>
           <span className="text-sm font-semibold text-sub-heading">
-            {dayjs(created_at).format('MMMM D, YYYY')}
+            {dayjs(createdAt).format('MMMM D, YYYY')}
           </span>
         </div>
 
@@ -316,8 +317,8 @@ export default function ShopPage() {
     </div>
   );
 }
-ShopPage.Layout = ShopLayout;
-ShopPage.authenticate = {
+WithdrawsPage.Layout = ShopLayout;
+WithdrawsPage.authenticate = {
   permissions: adminOwnerAndStaffOnly,
 };
 

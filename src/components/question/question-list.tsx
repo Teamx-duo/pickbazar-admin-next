@@ -112,25 +112,16 @@ const QuestionList = ({ questions, onPagination }: IProps) => {
       dataIndex: '_id',
       key: 'actions',
       align: 'center',
-      render: (id: string, row: Question) => {
-        const { permissions } = getAuthCredentials();
-        if (hasAccess(adminOnly, permissions)) {
-          return (
-            <ActionButtons
-              editModalView={'ANSWER_QUESTION'}
-              deleteModalView={'DELETE_QUESTION'}
-              id={id}
-              data={row}
-            />
-          );
-        }
-        return null;
-      },
+      render: (id: string, row: Question) => (
+        <ActionButtons
+          editModalView={'ANSWER_QUESTION'}
+          deleteModalView={'DELETE_QUESTION'}
+          id={id}
+          data={row}
+        />
+      ),
     },
   ];
-  if (router?.query?.shop) {
-    columns = columns?.filter((column) => column?.key !== 'actions');
-  }
   return (
     <>
       <div className="rounded overflow-hidden shadow mb-6">
@@ -139,7 +130,7 @@ const QuestionList = ({ questions, onPagination }: IProps) => {
           columns={columns}
           emptyText={t('table:empty-table-data')}
           data={questions?.data}
-          rowKey="id"
+          rowKey="_id"
           scroll={{ x: 800 }}
         />
       </div>

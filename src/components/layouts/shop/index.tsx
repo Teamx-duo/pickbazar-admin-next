@@ -1,13 +1,15 @@
-import { Fragment } from "react";
-import { useRouter } from "next/router";
-import Navbar from "@components/layouts/navigation/top-navbar";
-import { getAuthCredentials, hasAccess } from "@utils/auth-utils";
-import SidebarItem from "@components/layouts/navigation/sidebar-item";
-import { siteSettings } from "@settings/site.settings";
-import { useTranslation } from "next-i18next";
-import MobileNavigation from "@components/layouts/navigation/mobile-navigation";
+import { Fragment } from 'react';
+import { useRouter } from 'next/router';
+import Navbar from '@components/layouts/navigation/top-navbar';
+import { getAuthCredentials, hasAccess } from '@utils/auth-utils';
+import SidebarItem from '@components/layouts/navigation/sidebar-item';
+import { siteSettings } from '@settings/site.settings';
+import { useTranslation } from 'next-i18next';
+import MobileNavigation from '@components/layouts/navigation/mobile-navigation';
 
-const ShopLayout: React.FC = ({ children }) => {
+const ShopLayout: React.FC<{ children: JSX.Element | JSX.Element[] }> = ({
+  children,
+}) => {
   const { t } = useTranslation();
   const {
     query: { shop },

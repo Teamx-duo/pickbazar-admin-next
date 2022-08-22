@@ -26,6 +26,13 @@ export const useUpdateCategoryMutation = () => {
       onSettled: () => {
         queryClient.invalidateQueries(API_ENDPOINTS.CATEGORIES);
       },
+      onError: (error: any) => {
+        toast.error(
+          typeof error?.response?.data?.message === 'string'
+            ? error?.response?.data?.message
+            : error?.response?.data?.message?.[0]
+        );
+      },
     }
   );
 };

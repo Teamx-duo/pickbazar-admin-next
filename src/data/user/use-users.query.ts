@@ -14,7 +14,9 @@ const fetchUsers = async ({ queryKey }: QueryParamsType) => {
     orderBy = 'updated_at',
     sortedBy = 'DESC',
   } = params as QueryOptionsType;
-  const url = `${API_ENDPOINTS.USERS}?search=${text}&limit=${limit}&page=${page}&orderBy=${orderBy}&sortedBy=${sortedBy}`;
+  const url = `${API_ENDPOINTS.USERS}?${
+    text ? `search=${text}` : ''
+  }&limit=${limit}&page=${page}&orderBy=${orderBy}&sortedBy=${sortedBy}`;
   const {
     data: { docs, ...rest },
   } = await User.all(url);

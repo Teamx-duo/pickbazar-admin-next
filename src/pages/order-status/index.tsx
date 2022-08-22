@@ -18,7 +18,7 @@ export default function OrderStatusPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState(1);
   const [orderBy, setOrder] = useState("serial");
-  const [sortedBy, setColumn] = useState<SortOrder>(SortOrder.Desc);
+  const [sortedBy, setColumn] = useState<SortOrder>(SortOrder.Asc);
   const {
     data,
     isLoading: loading,
@@ -63,9 +63,9 @@ export default function OrderStatusPage() {
             }}
             options={[
               { id: 1, value: "name", label: "Name" },
-              { id: 1, value: "serial", label: "Serial" },
-              { id: 2, value: "created_at", label: "Created At" },
-              { id: 2, value: "updated_at", label: "Updated At" },
+              { id: 2, value: "serial", label: "Serial" },
+              { id: 3, value: "createdAt", label: "Created At" },
+              { id: 4, value: "updatedAt", label: "Updated At" },
             ]}
           />
 

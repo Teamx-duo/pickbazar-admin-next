@@ -119,14 +119,7 @@ type FormValues = {
   type: any;
 };
 
-const defaultValues = {
-  image: [],
-  name: '',
-  details: '',
-  parent: '',
-  icon: '',
-  type: '',
-};
+const defaultValues = {};
 
 type IProps = {
   initialValues?: Category | null;
@@ -168,7 +161,8 @@ export default function CreateOrUpdateCategoriesForm({
     const input = {
       name: values.name,
       details: values.details,
-      image: values?.image,
+      ...(values?.image &&
+        values?.image?.length > 0 && { image: values?.image }),
       icon: values.icon?.value || '',
       parent: values.parent?._id,
       type: values.type?._id,

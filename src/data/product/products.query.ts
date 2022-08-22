@@ -29,11 +29,11 @@ const fetchProducts = async ({ queryKey }: QueryParamsType) => {
     shop_id,
   });
   const url = `${API_ENDPOINTS.PRODUCTS}?${text ? `search=${text}` : ''}${
-    type ? `type=${type}` : ''
-  }${category ? `category=${category}` : ''}${
+    type ? `&type=${type}` : ''
+  }${category ? `&category=${category}` : ''}${
     shop_id ? `shop=${shop_id}` : ''
   }${
-    status ? `status=${status}` : ''
+    status ? `&status=${status}` : ''
   }&searchJoin=and&limit=${limit}&page=${page}&orderBy=${orderBy}&sortedBy=${sortedBy}`;
   const {
     data: { docs, ...rest },

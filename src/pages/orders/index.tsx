@@ -26,6 +26,8 @@ export default function Orders() {
     limit: 20,
     page,
     text: searchTerm,
+    orderBy,
+    sortedBy,
   });
   if (loading) return <Loader text={t('common:text-loading')} />;
   if (error) return <ErrorMessage message={error.message} />;

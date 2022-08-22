@@ -10,12 +10,11 @@ const fetchTypes = async ({ queryKey }: QueryParamsType) => {
   const {
     text,
     orderBy = 'updatedAt',
-    sortedBy = 'DESC',
+    sortedBy = 'desc',
   } = params as TypesQueryOptionsType;
-  const searchString = stringifySearchQuery({
-    name: text,
-  });
-  const url = `${API_ENDPOINTS.TYPES}/all?search=${searchString}&orderBy=${orderBy}&sortedBy=${sortedBy}`;
+  const url = `${API_ENDPOINTS.TYPES}/all?${
+    text ? `search=${text}` : ''
+  }&orderBy=${orderBy}&sortedBy=${sortedBy}`;
   const { data } = await Type.all(url);
   return { types: data as TTYpe[] };
 };

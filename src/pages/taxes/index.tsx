@@ -16,7 +16,7 @@ import { SortOrder } from "@ts-types/generated";
 export default function TaxesPage() {
   const { t } = useTranslation();
   const [searchTerm, setSearch] = useState("");
-  const [orderBy, setOrder] = useState("created_at");
+  const [orderBy, setOrder] = useState("createdAt");
   const [sortedBy, setColumn] = useState<SortOrder>(SortOrder.Desc);
   const {
     data,

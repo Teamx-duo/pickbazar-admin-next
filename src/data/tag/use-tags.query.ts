@@ -15,15 +15,13 @@ const fetchTags = async ({
     text,
     type,
     limit = 15,
-    orderBy = 'updated_at',
-    sortedBy = 'DESC',
+    orderBy = 'updatedAt',
+    sortedBy = 'desc',
   } = params as TagsQueryOptionsType;
 
-  const searchString = stringifySearchQuery({
-    name: text,
-    type,
-  });
-  const url = `${API_ENDPOINTS.TAGS}?search=${searchString}&searchJoin=and&limit=${limit}&page=${page}&orderBy=${orderBy}&sortedBy=${sortedBy}`;
+  const url = `${API_ENDPOINTS.TAGS}?${text ? `search=${text}` : ''}${
+    type ? `&type=${type}` : ''
+  }&searchJoin=and&limit=${limit}&page=${page}&orderBy=${orderBy}&sortedBy=${sortedBy}`;
   const {
     data: { docs, ...rest },
   } = await Tag.all(url);

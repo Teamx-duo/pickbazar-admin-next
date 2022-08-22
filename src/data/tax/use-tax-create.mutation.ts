@@ -23,11 +23,11 @@ export const useCreateTaxClassMutation = () => {
       onSuccess: () => {
         router.push(ROUTES.TAXES);
       },
-      onError: (err: any) => {
+      onError: (error: any) => {
         toast.error(
-          typeof err?.response?.data?.message === 'string'
-            ? err?.response?.data?.message
-            : err?.response?.data?.message?.[0]
+          typeof error?.response?.data?.message === 'string'
+            ? error?.response?.data?.message
+            : error?.response?.data?.message?.[0]
         );
       },
       // Always refetch after error or success:

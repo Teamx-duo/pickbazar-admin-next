@@ -11,13 +11,12 @@ const fetchCoupons = async ({ queryKey }: QueryParamsType) => {
     page,
     text,
     limit = 15,
-    orderBy = 'updated_at',
-    sortedBy = 'DESC',
+    orderBy = 'updatedAt',
+    sortedBy = 'desc',
   } = params as QueryOptionsType;
-  const searchString = stringifySearchQuery({
-    code: text,
-  });
-  const url = `${API_ENDPOINTS.COUPONS}?search=${searchString}&limit=${limit}&page=${page}&orderBy=${orderBy}&sortedBy=${sortedBy}`;
+  const url = `${API_ENDPOINTS.COUPONS}?${
+    text ? `search=${text}` : ''
+  }&limit=${limit}&page=${page}&orderBy=${orderBy}&sortedBy=${sortedBy}`;
   const {
     data: { docs, ...rest },
   } = await Coupon.all(url);

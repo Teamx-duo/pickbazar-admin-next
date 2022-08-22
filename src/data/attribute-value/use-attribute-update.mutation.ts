@@ -26,6 +26,13 @@ export const useUpdateAttributeValueMutation = () => {
       onSettled: () => {
         queryClient.invalidateQueries(API_ENDPOINTS.ATTRIBUTE_VALUES);
       },
+      onError: (error: any) => {
+        toast.error(
+          typeof error?.response?.data?.message === 'string'
+            ? error?.response?.data?.message
+            : error?.response?.data?.message?.[0]
+        );
+      },
     }
   );
 };

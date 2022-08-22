@@ -12,12 +12,11 @@ const fetchOrderStatuses = async ({ queryKey }: QueryParamsType) => {
     text,
     limit = 15,
     orderBy = 'serial',
-    sortedBy = 'ASC',
+    sortedBy = 'asc',
   } = params as QueryOptionsType;
-  const searchString = stringifySearchQuery({
-    name: text,
-  });
-  const url = `${API_ENDPOINTS.ORDER_STATUS}?search=${searchString}&limit=${limit}&page=${page}&orderBy=${orderBy}&sortedBy=${sortedBy}`;
+  const url = `${API_ENDPOINTS.ORDER_STATUS}?${
+    text ? `search=${text}` : ''
+  }&limit=${limit}&page=${page}&orderBy=${orderBy}&sortedBy=${sortedBy}`;
   const {
     data: { docs, ...rest },
   } = await OrderStatus.all(url);

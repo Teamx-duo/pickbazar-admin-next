@@ -22,6 +22,13 @@ export const useUpdateCouponMutation = () => {
       onSettled: () => {
         queryClient.invalidateQueries(API_ENDPOINTS.COUPONS);
       },
+      onError: (error: any) => {
+        toast.error(
+          typeof error?.response?.data?.message === 'string'
+            ? error?.response?.data?.message
+            : error?.response?.data?.message?.[0]
+        );
+      },
     }
   );
 };

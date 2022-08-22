@@ -14,7 +14,7 @@ import { SortOrder } from "@ts-types/generated";
 export default function WithdrawsPage() {
   const { t } = useTranslation();
   const [page, setPage] = useState(1);
-  const [orderBy, setOrder] = useState("created_at");
+  const [orderBy, setOrder] = useState("createdAt");
   const [sortedBy, setColumn] = useState<SortOrder>(SortOrder.Desc);
   const {
     data,
@@ -53,8 +53,8 @@ export default function WithdrawsPage() {
           }}
           options={[
             { value: "amount", label: "Amount" },
-            { value: "created_at", label: "Created At" },
-            { value: "updated_at", label: "Updated At" },
+            { value: "createdAt", label: "Created At" },
+            { value: "updatedAt", label: "Updated At" },
           ]}
         />
       </Card>

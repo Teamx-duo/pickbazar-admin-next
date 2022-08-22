@@ -25,6 +25,13 @@ export const useUpdateShopMutation = () => {
       onSettled: () => {
         queryClient.invalidateQueries(API_ENDPOINTS.SHOPS);
       },
+      onError: (error: any) => {
+        toast.error(
+          typeof error?.response?.data?.message === 'string'
+            ? error?.response?.data?.message
+            : error?.response?.data?.message?.[0]
+        );
+      },
     }
   );
 };

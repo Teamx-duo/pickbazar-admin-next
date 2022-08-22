@@ -1,29 +1,29 @@
-import CategoryList from "@components/category/category-list";
-import Card from "@components/common/card";
-import Layout from "@components/layouts/admin";
-import Search from "@components/common/search";
-import LinkButton from "@components/ui/link-button";
-import { useState } from "react";
-import ErrorMessage from "@components/ui/error-message";
-import Loader from "@components/ui/loader/loader";
-import { OrderField } from "@ts-types/index";
-import { SortOrder } from "@ts-types/generated";
-import { useParentCategoriesQuery } from "@data/category/use-parent-categories.query";
-import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { ROUTES } from "@utils/routes";
-import SortForm from "@components/common/sort-form";
-import TypeFilter from "@components/category/type-filter";
-import cn from "classnames";
-import { ArrowDown } from "@components/icons/arrow-down";
-import { ArrowUp } from "@components/icons/arrow-up";
+import CategoryList from '@components/category/category-list';
+import Card from '@components/common/card';
+import Layout from '@components/layouts/admin';
+import Search from '@components/common/search';
+import LinkButton from '@components/ui/link-button';
+import { useState } from 'react';
+import ErrorMessage from '@components/ui/error-message';
+import Loader from '@components/ui/loader/loader';
+import { OrderField } from '@ts-types/index';
+import { SortOrder } from '@ts-types/generated';
+import { useParentCategoriesQuery } from '@data/category/use-parent-categories.query';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { ROUTES } from '@utils/routes';
+import SortForm from '@components/common/sort-form';
+import TypeFilter from '@components/category/type-filter';
+import cn from 'classnames';
+import { ArrowDown } from '@components/icons/arrow-down';
+import { ArrowUp } from '@components/icons/arrow-up';
 
 export default function Categories() {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [type, setType] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
+  const [type, setType] = useState('');
   const [page, setPage] = useState(1);
   const { t } = useTranslation();
-  const [orderBy, setOrder] = useState("created_at");
+  const [orderBy, setOrder] = useState('createdAt');
   const [sortedBy, setColumn] = useState<SortOrder>(SortOrder.Desc);
   const [visible, setVisible] = useState(false);
 
@@ -44,7 +44,7 @@ export default function Categories() {
     sortedBy,
   });
 
-  if (loading) return <Loader text={t("common:text-loading")} />;
+  if (loading) return <Loader text={t('common:text-loading')} />;
   if (error) return <ErrorMessage message={error.message} />;
 
   function handleSearch({ searchText }: { searchText: string }) {
@@ -60,7 +60,7 @@ export default function Categories() {
         <div className="w-full flex flex-col md:flex-row items-center">
           <div className="md:w-1/4 mb-4 md:mb-0">
             <h1 className="text-xl font-semibold text-heading">
-              {t("form:input-label-categories")}
+              {t('form:input-label-categories')}
             </h1>
           </div>
 
@@ -73,10 +73,10 @@ export default function Categories() {
                 className="h-12 ms-4 md:ms-6"
               >
                 <span className="hidden md:block">
-                  + {t("form:button-label-add-categories")}
+                  + {t('form:button-label-add-categories')}
                 </span>
                 <span className="md:hidden">
-                  + {t("form:button-label-add")}
+                  + {t('form:button-label-add')}
                 </span>
               </LinkButton>
             </div>
@@ -85,7 +85,7 @@ export default function Categories() {
               className="text-accent text-base font-semibold flex items-center md:ms-5 mt-5 md:mt-0"
               onClick={toggleVisible}
             >
-              {t("common:text-filter")}{" "}
+              {t('common:text-filter')}{' '}
               {visible ? (
                 <ArrowUp className="ms-2" />
               ) : (
@@ -96,16 +96,16 @@ export default function Categories() {
         </div>
 
         <div
-          className={cn("w-full flex transition", {
-            "h-auto visible": visible,
-            "h-0 invisible": !visible,
+          className={cn('w-full flex transition', {
+            'h-auto visible': visible,
+            'h-0 invisible': !visible,
           })}
         >
           <div className="flex flex-col md:flex-row md:items-center mt-5 md:mt-8 border-t border-gray-200 pt-5 md:pt-8 w-full">
             <TypeFilter
               className="w-full md:w-1/2 md:mr-5"
-              onTypeFilter={({ slug }: { slug: string }) => {
-                setType(slug);
+              onTypeFilter={({ _id }: { _id: string }) => {
+                setType(_id);
               }}
             />
             <SortForm
@@ -117,9 +117,9 @@ export default function Categories() {
                 setOrder(value);
               }}
               options={[
-                { id: 1, value: "name", label: "Name" },
-                { id: 2, value: "created_at", label: "Created At" },
-                { id: 2, value: "updated_at", label: "Updated At" },
+                { id: 1, value: 'name', label: 'Name' },
+                { id: 2, value: 'createdAt', label: 'Created At' },
+                { id: 3, value: 'updatedAt', label: 'Updated At' },
               ]}
             />
           </div>
@@ -136,6 +136,6 @@ Categories.Layout = Layout;
 
 export const getStaticProps = async ({ locale }: any) => ({
   props: {
-    ...(await serverSideTranslations(locale, ["form", "common", "table"])),
+    ...(await serverSideTranslations(locale, ['form', 'common', 'table'])),
   },
 });

@@ -21,7 +21,7 @@ export default function ProductsPage() {
   const [category, setCategory] = useState('');
   const [page, setPage] = useState(1);
   const { t } = useTranslation();
-  const [orderBy, setOrder] = useState('created_at');
+  const [orderBy, setOrder] = useState('createdAt');
   const [sortedBy, setColumn] = useState<SortOrder>(SortOrder.Desc);
   const [visible, setVisible] = useState(false);
 
@@ -29,10 +29,10 @@ export default function ProductsPage() {
     setVisible((v) => !v);
   };
 
-    const {
-      data,
-      isLoading: loading,
-      error,
+  const {
+    data,
+    isLoading: loading,
+    error,
   } = useProductsQuery({
     limit: 20,
     page,
@@ -89,12 +89,13 @@ export default function ProductsPage() {
           <div className="flex flex-col md:flex-row md:items-center mt-5 md:mt-8 border-t border-gray-200 pt-5 md:pt-8 w-full">
             <CategoryTypeFilter
               className="w-full md:w-2/3 md:mr-5"
-              onCategoryFilter={({ slug }: { slug: string }) => {
-                setCategory(slug);
+              onCategoryFilter={({ _id }: { _id: string }) => {
+                setCategory(_id);
               }}
-              onTypeFilter={({ slug }: { slug: string }) => {
-                setType(slug);
+              onTypeFilter={({ _id }: { _id: string }) => {
+                setType(_id);
               }}
+              type={type}
             />
             <SortForm
               className="w-full md:w-1/3 mt-5 md:mt-0"

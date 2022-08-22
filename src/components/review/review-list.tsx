@@ -86,8 +86,7 @@ const ReviewList = ({ reviews, onPagination }: IProps) => {
       align: 'center',
       render: (rating: number) => (
         <div className="inline-flex shrink-0 items-center rounded-full border border-accent px-3 py-0.5 text-base text-accent">
-          {rating ?? 0}{" "}
-          <StarSmall />
+          {rating ?? 0} <StarSmall />
         </div>
       ),
     },
@@ -127,17 +126,10 @@ const ReviewList = ({ reviews, onPagination }: IProps) => {
       key: 'actions',
       align: 'center',
       render: (id: string) => {
-        const { permissions } = getAuthCredentials();
-        if (hasAccess(adminOnly, permissions)) {
-          return <ActionButtons deleteModalView={'DELETE_REVIEW'} id={id} />;
-        }
-        return null;
+        return <ActionButtons deleteModalView={'DELETE_REVIEW'} id={id} />;
       },
     },
   ];
-  if (router?.query?.shop) {
-    columns = columns?.filter((column) => column?.key !== 'actions');
-  }
   return (
     <>
       <div className="rounded overflow-hidden shadow mb-6">

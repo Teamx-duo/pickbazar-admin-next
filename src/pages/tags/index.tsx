@@ -19,7 +19,7 @@ export default function Tags() {
   const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
   const [page, setPage] = useState(1);
-  const [orderBy, setOrder] = useState('created_at');
+  const [orderBy, setOrder] = useState('createdAt');
   const [sortedBy, setColumn] = useState<SortOrder>(SortOrder.Desc);
   const {
     data,
@@ -66,7 +66,7 @@ export default function Tags() {
             options={[
               { id: 1, value: 'name', label: 'Name' },
               { id: 2, value: 'createdAt', label: 'Created At' },
-              { id: 2, value: 'updatedAt', label: 'Updated At' },
+              { id: 3, value: 'updatedAt', label: 'Updated At' },
             ]}
           />
 

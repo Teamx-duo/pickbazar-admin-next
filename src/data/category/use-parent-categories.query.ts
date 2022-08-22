@@ -21,7 +21,7 @@ const fetchCategories = async ({ queryKey }: QueryParamsType) => {
   } = params as CategoriesQueryOptionsType;
   
   const url = `${API_ENDPOINTS.PARENT_CATEGORIES}?${text && `search=${text}&`}${
-    type && `type=${type}?`
+    type && `type=${type}`
   }&searchJoin=and&limit=${limit}&${
     parent ? `parent=${parent}` : ''
   }&page=${page}&orderBy=${orderBy}&sortedBy=${sortedBy}`;
