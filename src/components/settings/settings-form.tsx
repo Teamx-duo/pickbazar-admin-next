@@ -140,12 +140,14 @@ export default function SettingsForm({
         : '',
       // @ts-ignore
       taxClass: !!taxClasses?.data?.length
-        ? taxClasses?.data?.find((tax: Tax) => tax._id == settings?.taxClass)
+        ? taxClasses?.data?.find(
+            (tax: Tax) => tax._id == settings?.taxClass?._id
+          )
         : '',
       // @ts-ignore
       shippingClass: !!shippingClasses?.length
         ? shippingClasses?.find(
-            (shipping: Shipping) => shipping._id == settings?.shippingClass
+            (shipping: Shipping) => shipping._id == settings?.shippingClass?._id
           )
         : '',
     },

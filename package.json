@@ -43,6 +43,7 @@
     "react-query": "^3.23.2",
     "react-scroll": "^1.8.4",
     "react-select": "^4.3.1",
+    "react-select-country-list": "^2.2.3",
     "react-toastify": "^8.0.2",
     "yup": "^0.32.9"
   },

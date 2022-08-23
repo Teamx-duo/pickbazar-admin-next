@@ -1,10 +1,12 @@
-import * as yup from "yup";
+import * as yup from 'yup';
 export const taxValidationSchema = yup.object().shape({
-  name: yup.string().required("form:error-name-required"),
+  name: yup.string().required('form:error-name-required'),
   rate: yup
     .number()
-    .typeError("form:error-rate-must-number")
-    .positive("form:error-rate-must-positive")
-    .integer("form:error-rate-must-integer")
-    .required("form:error-rate-required"),
+    .typeError('form:error-rate-must-number')
+    .positive('form:error-rate-must-positive')
+    .integer('form:error-rate-must-integer')
+    .required('form:error-rate-required'),
+  country: yup.string().required('form:error-country-required'),
+  priority: yup.number().required('form:error-priority-required'),
 });

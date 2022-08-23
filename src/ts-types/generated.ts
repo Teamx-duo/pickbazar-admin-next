@@ -636,8 +636,8 @@ export type SettingsOptions = {
   currency?: Maybe<Scalars['String']>;
   contactDetails?: Maybe<ContactDetails>;
   logo?: Maybe<Attachment>;
-  taxClass?: Maybe<Scalars['String']>;
-  shippingClass?: Maybe<Scalars['String']>;
+  taxClass?: Maybe<Tax>;
+  shippingClass?: Maybe<Shipping>;
 };
 export declare type LoginInput = {
   email: Scalars['String'];

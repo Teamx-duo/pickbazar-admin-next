@@ -12,13 +12,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { taxValidationSchema } from './tax-validation-schema';
 
 const defaultValues = {
-  name: '',
-  rate: 0,
-  country: '',
-  state: '',
   priority: 1,
-  zip: '',
-  city: '',
 };
 
 type IProps = {
@@ -47,6 +41,7 @@ export default function CreateOrUpdateTaxForm({ initialValues }: IProps) {
           id: initialValues._id!,
           input: {
             ...values,
+            priority: Number(values.priority),
           },
         },
       });
@@ -55,6 +50,7 @@ export default function CreateOrUpdateTaxForm({ initialValues }: IProps) {
         variables: {
           input: {
             ...values,
+            priority: Number(values.priority),
           },
         },
       });
@@ -99,7 +95,7 @@ export default function CreateOrUpdateTaxForm({ initialValues }: IProps) {
           />
           <Input
             label={t('form:input-label-country')}
-            {...register('country')}
+            {...register('country', { required: 'Country is required' })}
             error={t(errors.country?.message!)}
             variant="outline"
             className="mb-5"
