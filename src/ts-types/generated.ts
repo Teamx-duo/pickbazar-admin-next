@@ -978,7 +978,7 @@ export declare type WithdrawPaginator = {
 
 export declare type CreateWithdrawInput = {
   amount: Scalars['Float'];
-  shop_id: Scalars['Int'];
+  shop: Scalars['String'];
   payment_method?: Maybe<Scalars['String']>;
   details?: Maybe<Scalars['String']>;
   note?: Maybe<Scalars['String']>;

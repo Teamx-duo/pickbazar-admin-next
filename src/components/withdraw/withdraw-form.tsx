@@ -51,7 +51,7 @@ export default function CreateOrUpdateWithdrawForm({ initialValues }: IProps) {
   const onSubmit = (values: FormValues) => {
     const input = {
       amount: +values.amount,
-      shop_id: Number(shopId),
+      shop: shopId,
       details: values.details,
       payment_method: values.payment_method,
       note: values.note,
