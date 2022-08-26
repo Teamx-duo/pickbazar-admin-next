@@ -1,12 +1,21 @@
-import AnswerQuestionView from '@components/question/question-answer-view';
-import QuestionDeleteView from '@components/question/question-delete-view';
-import ReviewDeleteView from '@components/review/review-delete-view';
 import Modal from '@components/ui/modal/modal';
 import dynamic from 'next/dynamic';
 import { useModalAction, useModalState } from './modal.context';
 const TagDeleteView = dynamic(() => import('@components/tag/tag-delete-view'));
 const TaxDeleteView = dynamic(() => import('@components/tax/tax-delete-view'));
 const BanCustomerView = dynamic(() => import('@components/user/user-ban-view'));
+const OrderStatusDeleteView = dynamic(
+  () => import('@components/order-status/order-status-delete-view')
+);
+const AnswerQuestionView = dynamic(
+  () => import('@components/question/question-answer-view')
+);
+const QuestionDeleteView = dynamic(
+  () => import('@components/question/question-delete-view')
+);
+const ReviewDeleteView = dynamic(
+  () => import('@components/review/review-delete-view')
+);
 const ShippingDeleteView = dynamic(
   () => import('@components/shipping/shipping-delete-view')
 );
@@ -60,6 +69,7 @@ const ManagedModal = () => {
       {view === 'DELETE_COUPON' && <CouponDeleteView />}
       {view === 'DELETE_TAX' && <TaxDeleteView />}
       {view === 'DELETE_SHIPPING' && <ShippingDeleteView />}
+      {view === 'DELETE_ORDER_STATUS' && <OrderStatusDeleteView />}
       {view === 'DELETE_TAG' && <TagDeleteView />}
       {view === 'BAN_CUSTOMER' && <BanCustomerView />}
       {view === 'SHOP_APPROVE_VIEW' && <ApproveShopView />}
