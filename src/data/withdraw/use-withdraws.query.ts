@@ -22,7 +22,7 @@ const fetchWithdraws = async ({
     limit = 15,
     shop_id,
     orderBy = 'updatedAt',
-    sortedBy = 'DESC',
+    sortedBy = 'desc',
   } = params as WithdrawsQueryOptionsType;
 
   const url = `${API_ENDPOINTS.WITHDRAWS}?${

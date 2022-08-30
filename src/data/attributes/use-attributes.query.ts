@@ -10,7 +10,7 @@ const fetchAttributes = async ({ queryKey }: QueryParamsType) => {
   const {
     text,
     shop_id,
-    orderBy = 'updated_at',
+    orderBy = 'updatedAt',
     sortedBy = 'desc',
   } = params as QueryOptionsType;
   const searchString = stringifySearchQuery({

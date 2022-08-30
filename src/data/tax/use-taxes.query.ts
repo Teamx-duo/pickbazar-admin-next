@@ -9,8 +9,8 @@ const fetchTaxes = async ({ queryKey }: QueryParamsType) => {
   const [_key, params] = queryKey;
   const {
     text,
-    orderBy = 'updated_at',
-    sortedBy = 'DESC',
+    orderBy = 'updatedAt',
+    sortedBy = 'desc',
   } = params as QueryOptionsType;
   const searchString = stringifySearchQuery({
     name: text,

@@ -24,7 +24,7 @@ export default function AttributePage() {
   const { t } = useTranslation();
   const { openModal } = useModalAction();
 
-  const [orderBy, setOrder] = useState("updated_at");
+  const [orderBy, setOrder] = useState("updatedAt");
   const [sortedBy, setColumn] = useState<SortOrder>(SortOrder.Desc);
   const { data: shopData, isLoading: fetchingShop } = useShopQuery(
     shop as string
@@ -72,8 +72,8 @@ export default function AttributePage() {
               }}
               options={[
                 { id: 1, value: "name", label: "Name" },
-                { id: 2, value: "created_at", label: "Created At" },
-                { id: 2, value: "updated_at", label: "Updated At" },
+                { id: 2, value: "createdAt", label: "Created At" },
+                { id: 2, value: "updatedAt", label: "Updated At" },
               ]}
             />
 

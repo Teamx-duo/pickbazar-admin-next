@@ -16,8 +16,8 @@ const fetchCategories = async ({ queryKey }: QueryParamsType) => {
     text,
     type,
     limit = 15,
-    orderBy = 'updated_at',
-    sortedBy = 'DESC',
+    orderBy = 'updatedAt',
+    sortedBy = 'desc',
   } = params as CategoriesQueryOptionsType;
   
   const url = `${API_ENDPOINTS.PARENT_CATEGORIES}?${text && `search=${text}&`}${

@@ -15,13 +15,15 @@ const fetchShops = async ({
     text,
     limit = 15,
     orderBy = 'updatedAt',
-    sortedBy = 'DESC',
+    sortedBy = 'desc',
   } = params as ShopsQueryOptionsType;
 
-  const searchString = stringifySearchQuery({
-    name: text,
-  });
-  const url = `${API_ENDPOINTS.SHOPS}?search=${searchString}&searchJoin=and&limit=${limit}&page=${page}&orderBy=${orderBy}&sortedBy=${sortedBy}`;
+  // const searchString = stringifySearchQuery({
+  //   name: text,
+  // });
+  const url = `${API_ENDPOINTS.SHOPS}?${
+    text ? `&search=${text}` : ''
+  }&searchJoin=and&limit=${limit}&page=${page}&orderBy=${orderBy}&sortedBy=${sortedBy}`;
   const {
     data: { docs, ...rest },
   } = await Shop.all(url);

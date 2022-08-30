@@ -10,7 +10,7 @@ const fetchShippingClasses = async ({ queryKey }: QueryParamsType) => {
   const {
     text,
     orderBy = 'updatedAt',
-    sortedBy = 'DESC',
+    sortedBy = 'desc',
   } = params as QueryOptionsType;
   const url = `${API_ENDPOINTS.SHIPPINGS}?${
     text ? `search=${text}` : ''

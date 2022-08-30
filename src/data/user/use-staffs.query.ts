@@ -11,8 +11,8 @@ const fetchStaffs = async ({ queryKey }: QueryParamsType) => {
     page,
     text,
     limit = 15,
-    orderBy = "updated_at",
-    sortedBy = "DESC",
+    orderBy = "updatedAt",
+    sortedBy = "desc",
   } = params as QueryOptionsType;
   const url = `${API_ENDPOINTS.STAFFS}?search=${text}&shop_id=${shop_id}&limit=${limit}&page=${page}&orderBy=${orderBy}&sortedBy=${sortedBy}`;
   const {

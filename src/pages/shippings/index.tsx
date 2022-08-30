@@ -17,7 +17,7 @@ import SortForm from "@components/common/sort-form";
 export default function ShippingsPage() {
   const { t } = useTranslation();
   const [searchTerm, setSearch] = useState("");
-  const [orderBy, setOrder] = useState("created_at");
+  const [orderBy, setOrder] = useState("createdAt");
   const [sortedBy, setColumn] = useState<SortOrder>(SortOrder.Desc);
   const {
     data,
@@ -57,8 +57,8 @@ export default function ShippingsPage() {
             }}
             options={[
               { id: 1, value: "name", label: "Name" },
-              { id: 2, value: "created_at", label: "Created At" },
-              { id: 2, value: "updated_at", label: "Updated At" },
+              { id: 2, value: "createdAt", label: "Created At" },
+              { id: 3, value: "updatedAt", label: "Updated At" },
             ]}
           />
 

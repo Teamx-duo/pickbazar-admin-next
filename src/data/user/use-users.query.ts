@@ -11,8 +11,8 @@ const fetchUsers = async ({ queryKey }: QueryParamsType) => {
     page,
     text,
     limit = 15,
-    orderBy = 'updated_at',
-    sortedBy = 'DESC',
+    orderBy = 'updatedAt',
+    sortedBy = 'desc',
   } = params as QueryOptionsType;
   const url = `${API_ENDPOINTS.USERS}?${
     text ? `search=${text}` : ''

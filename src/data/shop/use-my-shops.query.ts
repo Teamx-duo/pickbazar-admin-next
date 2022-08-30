@@ -16,8 +16,8 @@ const fetchMyShops = async ({ queryKey }: QueryParamsType): Promise<Props> => {
     page,
     text,
     limit = 15,
-    orderBy = "updated_at",
-    sortedBy = "DESC",
+    orderBy = "updatedAt",
+    sortedBy = "desc",
   } = params as ShopsQueryOptionsType;
 
   const searchString = stringifySearchQuery({

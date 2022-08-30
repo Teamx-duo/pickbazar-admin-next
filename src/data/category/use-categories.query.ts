@@ -19,7 +19,7 @@ const fetchCategories = async ({
     type,
     limit = 15,
     orderBy = 'updatedAt',
-    sortedBy = 'DESC',
+    sortedBy = 'desc',
   } = params as CategoriesQueryOptionsType;
 
   const url = `${API_ENDPOINTS.CATEGORIES}?${text ? `search=${text}&` : ''}${

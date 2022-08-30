@@ -10,7 +10,7 @@ export default function ImportAttributes() {
     query: { shop },
   } = useRouter();
   const { data: shopData } = useShopQuery(shop as string);
-  const shopId = shopData?.shop?.id!;
+  const shopId = shopData?.shop?._id!;
   const { mutate: importAttributes, isLoading: loading } =
     useImportAttributesMutation();
 

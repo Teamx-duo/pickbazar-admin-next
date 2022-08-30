@@ -17,7 +17,7 @@ const fetchReviews = async ({
     limit = 15,
     shop_id,
     orderBy = 'updatedAt',
-    sortedBy = 'DESC',
+    sortedBy = 'desc',
     user,
     product,
   } = params as ReviewsQueryOptionsType;

@@ -56,6 +56,6 @@ export enum SEARCH_JOIN {
 }
 
 export enum OrderField {
-  CreatedAt = "created_at",
-  UpdatedAt = "updated_at",
+  CreatedAt = "createdAt",
+  UpdatedAt = "updatedAt",
 }

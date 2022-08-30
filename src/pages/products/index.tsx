@@ -109,7 +109,7 @@ export default function ProductsPage() {
                 { value: 'name', label: 'Name' },
                 { value: 'price', label: 'Price' },
                 { value: 'max_price', label: 'Max Price' },
-                { value: 'mix_price', label: 'Min Price' },
+                { value: 'min_price', label: 'Min Price' },
                 { value: 'sale_price', label: 'Sale Price' },
                 { value: 'quantity', label: 'Quantity' },
                 { value: 'createdAt', label: 'Created At' },

@@ -8,6 +8,8 @@ import TextArea from '@components/ui/text-area';
 import { useTranslation } from 'next-i18next';
 import FileInput from '@components/ui/file-input';
 import pick from 'lodash/pick';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { profileValidationSchema } from './profile-validation-schema';
 
 type FormValues = {
   name: string;
@@ -31,6 +33,7 @@ export default function ProfileUpdate({ me }: any) {
       ...(me &&
         pick(me, ['name', 'profile.bio', 'profile.contact', 'profile.avatar'])),
     },
+    resolver: yupResolver(profileValidationSchema),
   });
 
   async function onSubmit(values: FormValues) {

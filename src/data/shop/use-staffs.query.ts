@@ -11,8 +11,8 @@ const fetchStaffs = async ({ queryKey }: QueryParamsType) => {
   const [_key, params] = queryKey;
   const {
     shop_id,
-    orderBy = 'updated_at',
-    sortedBy = 'DESC',
+    orderBy = 'updatedAt',
+    sortedBy = 'desc',
     limit = 15,
     page = 1,
   } = params as StaffsQueryOptionsType;
