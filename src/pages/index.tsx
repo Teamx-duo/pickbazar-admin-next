@@ -1,17 +1,17 @@
-import dynamic from "next/dynamic";
-import type { GetServerSideProps } from "next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import dynamic from 'next/dynamic';
+import type { GetServerSideProps } from 'next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import {
   allowedRoles,
   getAuthCredentials,
   hasAccess,
   isAuthenticated,
-} from "@utils/auth-utils";
-import { SUPER_ADMIN } from "@utils/constants";
-import { ROUTES } from "@utils/routes";
-import AppLayout from "@components/layouts/app";
-const AdminDashboard = dynamic(() => import("@components/dashboard/admin"));
-const OwnerDashboard = dynamic(() => import("@components/dashboard/owner"));
+} from '@utils/auth-utils';
+import { SUPER_ADMIN } from '@utils/constants';
+import { ROUTES } from '@utils/routes';
+import AppLayout from '@components/layouts/app';
+const AdminDashboard = dynamic(() => import('@components/dashboard/admin'));
+const OwnerDashboard = dynamic(() => import('@components/dashboard/owner'));
 
 export default function Dashboard({
   userPermissions,
@@ -40,21 +40,18 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       },
     };
   }
-  if (locale) {
-    return {
-      props: {
-        ...(await serverSideTranslations(locale, [
-          "common",
-          "table",
-          "widgets",
-        ])),
-        userPermissions: permissions,
-      },
-    };
-  }
   return {
     props: {
+      ...(await serverSideTranslations(
+        locale ?? '',
+        locale ? ['common', 'table', 'widgets'] : []
+      )),
       userPermissions: permissions,
     },
   };
+  // return {
+  //   props: {
+  //     userPermissions: permissions,
+  //   },
+  // };
 };
