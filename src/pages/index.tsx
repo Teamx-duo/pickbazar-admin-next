@@ -10,6 +10,8 @@ import {
 import { SUPER_ADMIN } from '@utils/constants';
 import { ROUTES } from '@utils/routes';
 import AppLayout from '@components/layouts/app';
+import nextI18NextConfig from '../../next-i18next.config';
+
 const AdminDashboard = dynamic(() => import('@components/dashboard/admin'));
 const OwnerDashboard = dynamic(() => import('@components/dashboard/owner'));
 
@@ -44,11 +46,11 @@ export const getServerSideProps: GetServerSideProps = async ({
   }
   return {
     props: {
-      ...(await serverSideTranslations(locale!, [
-        'common',
-        'table',
-        'widgets',
-      ])),
+      ...(await serverSideTranslations(
+        locale!,
+        ['common', 'table', 'widgets'],
+        nextI18NextConfig
+      )),
       userPermissions: permissions,
     },
   };
