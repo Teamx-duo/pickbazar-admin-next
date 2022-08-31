@@ -111,7 +111,7 @@ const ShopForm = ({ initialValues }: { initialValues?: any }) => {
   function onSubmit(values: FormValues) {
     const settings = {
       ...values?.settings,
-      location: values?.settings?.location,
+      location: { ...omit(values?.settings?.location, '__typename') },
       socials: values?.settings?.socials
         ? values?.settings?.socials?.map((social: any) => ({
             icon: social?.icon?.value,

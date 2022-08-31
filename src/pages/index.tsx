@@ -26,8 +26,10 @@ export default function Dashboard({
 
 Dashboard.Layout = AppLayout;
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { locale } = ctx;
+export const getServerSideProps: GetServerSideProps = async ({
+  locale,
+  ...ctx
+}) => {
   const { token, permissions } = getAuthCredentials(ctx);
   if (
     !isAuthenticated({ token, permissions }) ||
@@ -42,10 +44,11 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   }
   return {
     props: {
-      ...(await serverSideTranslations(
-        locale ?? '',
-        locale ? ['common', 'table', 'widgets'] : []
-      )),
+      ...(await serverSideTranslations(locale!, [
+        'common',
+        'table',
+        'widgets',
+      ])),
       userPermissions: permissions,
     },
   };
