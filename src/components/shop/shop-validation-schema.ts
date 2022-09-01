@@ -17,10 +17,7 @@ export const shopValidationSchema = yup.object().shape({
         .typeError('form: error-email-string')
         .email('form:error-email-format')
         .required('form:error-email-required'),
-      account: yup
-        .number()
-        .transform((value) => (isNaN(value) ? undefined : value))
-        .required('form:error-email-required'),
+      account: yup.string().required('form:error-account-required'),
       bank: yup.string().required('form:error-bank-required'),
       name: yup
         .string()
@@ -37,5 +34,13 @@ export const shopValidationSchema = yup.object().shape({
       .max(15, 'Contact must be less than 15 characters.')
       .required('form:error-email-required'),
     website: yup.string(),
+    location: yup.object().shape({
+      city: yup.string().max(100),
+      country: yup.string().max(100),
+      formattedAddress: yup.string(),
+      lat: yup.number(),
+      lng: yup.number(),
+      state: yup.string(),
+    }).required('form:error-location-required'),
   }),
 });
